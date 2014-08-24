@@ -1,0 +1,222 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{authblk}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{8.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\topmargin}{0in}
+\begin{document}
+\title{Notes on linear least-squares fitting and error propagation}
+\author{Prof. Andrew Puckett}
+\affil{Dept. of Physics, University of Connecticut}
+\maketitle
+\section{Minimization of $\chi^2$ for the linear least-squares method}
+\paragraph{}
+Assume you have obtained $n$ measurements of a dependent variable $y_i$ with experimental uncertainties $\sigma_i$ at corresponding values of an independent variable $x_i$, for $i=1,\ldots , n$. Furthermore, assume that the independent variable $x_i$ has no experimental uncertainty, or in any case that its uncertainty is negligible compared to the uncertainty in $y_i$ ($\Delta x_i \ll \Delta y_i/m$). To fit a linear hypothesis of the functional form $y(x) = mx + b$ (where $m$ and $b$ are free parameters whose values and uncertainties are to be determined) to the data using the least-squares method, we minimize the $\chi^2$ function defined as the sum of squared differences between the data and the linear hypothesis, divided by the uncertainties on the data: 
+\begin{eqnarray}
+  \chi^2 &\equiv& \sum_{i=1}^{n} \left(\frac{y_i - (mx_i+b)}{\sigma_i}\right)^2 
+\end{eqnarray}
+Note that the symbol '$\equiv$' in this context means ``defined as''.
+
+In order to minimize $\chi^2$ as a function of the unknown parameters $m$ and $b$, we set its partial derivatives with respect to the parameters equal to zero:
+\begin{eqnarray}
+  \frac{\partial \chi^2}{\partial m} &=& -2\sum_{i=1}^{n} \frac{x_i(y_i - (mx_i + b))}{\sigma_i^2} = 0 \label{dchi2dm} \\
+  \frac{\partial \chi^2}{\partial b} &=& -2\sum_{i=1}^{n} \frac{y_i - (mx_i+b)}{\sigma_i^2} = 0 \label{dchi2db}
+\end{eqnarray}
+Note that the partial derivatives of $\chi^2$ with respect to the parameters are linear functions of the parameters, leading to two simultaneous linear equations in two unknowns, which we know how to solve. Dropping the constant multiplicative factor of $-2$ from the left-hand side of equations \eqref{dchi2dm}-\eqref{dchi2db}, we arrive at the following linear system of equations, which can be expressed in matrix notation thusly:
+\begin{eqnarray}
+  \left(\begin{array}{cc} \sum_{i=1}^{n} \frac{x_i^2}{\sigma_i^2} & \sum_{i=1}^{n} \frac{x_i}{\sigma_i^2} \\ \sum_{i=1}^{n} \frac{x_i}{\sigma_i^2} & \sum_{i=1}^{n} \frac{1}{\sigma_i^2} \end{array}\right)\left(\begin{array}{c} \hat{m} \\ \hat{b} \end{array}\right) &=& \left(\begin{array}{c} \sum_{i=1}^{n} \frac{x_i y_i}{\sigma_i^2} \\ \sum_{i=1}^{n} \frac{y_i}{\sigma_i^2} \end{array}\right), \label{matrixeqns}
+\end{eqnarray}
+where the ' $\hat{}$ ' over the symbols $m$ and $b$ indicates that these are not the \emph{true} values of $m$ and $b$ but rather the least-squares \emph{estimators} for $m$ and $b$. The known coefficients of $m$ and $b$ in equation \eqref{matrixeqns} are simply sums over the experimental data. The weight factors $\sigma_i^{-2}$ give correspondingly larger weight in the sums to data points with smaller experimental uncertainties, and less weight to points with large uncertainties. 
+
+Following the notation in Prof. Jones' reference sheet for linear fits, we define the following shorthand $S_{pq}$ for the various sums:
+\begin{eqnarray}
+  S_{pq} &\equiv& \sum_{i=1}^{n} \frac{x_i^p y_i^q}{\sigma_i^2} \label{shorthand}
+\end{eqnarray}
+In terms of $S_{pq}$, the equations read:
+\begin{eqnarray}
+  \left(\begin{array}{cc} S_{20} & S_{10} \\ S_{10} & S_{00} \end{array}\right) \left(\begin{array}{c} \hat{m} \\ \hat{b} \end{array} \right) &=& \left(\begin{array}{c} S_{11} \\ S_{01} \end{array} \right) \label{matrixeqns2}
+\end{eqnarray}
+
+The solution to this system of equations is obtained by inverting the $2 \times 2$ matrix on the left-hand side of equation \eqref{matrixeqns}:
+\begin{eqnarray}
+  \left(\begin{array}{c} \hat{m} \\ \hat{b} \end{array}\right) &=& \frac{1}{S_{20}S_{00} - S_{10}^2} \left(\begin{array}{cc} S_{00} & -S_{10} \\ -S_{10} & S_{20} \end{array}\right)\left(\begin{array}{c} S_{11} \\ S_{01} \end{array}\right) \label{matrix_inverted} \\
+  \hat{m} &=& \frac{S_{00} S_{11} - S_{10} S_{01}}{S_{20}S_{00} - S_{10}^2 } \label{mhat_formula} \\ 
+  \hat{b} &=& \frac{S_{20}S_{01} - S_{10} S_{11} }{S_{20}S_{00} - S_{10}^2 } \label{bhat_formula}
+\end{eqnarray}
+The standard uncertainties in the values of the parameters are given by the square roots of the diagonal elements of the inverse matrix:
+\begin{eqnarray}
+  \Delta \hat{m} &=& \sqrt{\frac{S_{00}}{S_{20}S_{00} - S_{10}^2}} \label{mhat_error} \\ 
+  \Delta \hat{b} &=& \sqrt{\frac{S_{20}}{S_{20}S_{00} - S_{10}^2}} \label{bhat_error}
+\end{eqnarray}
+To see why this is the case, recall the fact that $\hat{m}$ and $\hat{b}$ are now expressed as functions of the known quantities $S_{pq}$ which are functions of the data $\{x_i, y_i, \sigma_i \}$. To propagate the data uncertainties $\sigma_i$ through to the parameter uncertainties $\Delta \hat{m}$ and $\Delta \hat{b}$, we use the standard error propagation formula for the case where the errors $\sigma_i$ on the various $y_i$ are uncorrelated:
+\begin{eqnarray}
+  \left(\Delta \hat{m}\right)^2 &=& \sum_{i=1}^{n} \left(\frac{\partial \hat{m}}{\partial y_i }\right)^2 \sigma_i^2 \label{errorpropagation_m} \\
+  \left(\Delta \hat{b}\right)^2 &=& \sum_{i=1}^{n} \left(\frac{\partial \hat{b}}{\partial y_i }\right)^2 \sigma_i^2 \label{errorpropagation_b}
+\end{eqnarray}
+Recalling the definitions of $S_{pq}$, we find that 
+\begin{eqnarray}
+\frac{\partial \hat{m}}{\partial y_i} &=& \frac{1}{S_{20}S_{00} - S_{10}^2}\left[S_{00} \frac{x_i}{\sigma_i^2} - S_{10}\frac{1}{\sigma_i^2} \right] \\
+\frac{\partial \hat{b}}{\partial y_i} &=& \frac{1}{S_{20}S_{00} - S_{10}^2}\left[S_{20} \frac{1}{\sigma_i^2} - S_{10}\frac{x_i}{\sigma_i^2} \right]
+\end{eqnarray}
+Squaring the partial derivatives and multiplying by $\sigma_i^2$, we find:
+\begin{eqnarray}
+  \left(\frac{\partial \hat{m}}{\partial y_i}\right)^2\sigma_i^2 &=& \left(\frac{1}{S_{20}S_{00} - S_{10}^2}\right)^2 \left[S_{00}^2 \frac{x_i^2}{\sigma_i^2} + S_{10}^2\frac{1}{\sigma_i^2} - 2S_{00}S_{10} \frac{x_i}{\sigma_i^2} \right] \\
+  \left(\frac{\partial \hat{b}}{\partial y_i}\right)^2\sigma_i^2 &=& \left(\frac{1}{S_{20}S_{00} - S_{10}^2}\right)^2 \left[S_{20}^2 \frac{1}{\sigma_i^2} + S_{10}^2\frac{x_i^2}{\sigma_i^2} - 2S_{20}S_{10} \frac{x_i}{\sigma_i^2} \right]
+\end{eqnarray}
+Finally, by summing over all $i$ from $1$ to $n$ (and recalling the definition of $S_{pq}$) we obtain:
+\begin{eqnarray}
+  \left(\Delta \hat{m} \right)^2 &=& \left(\frac{1}{S_{20}S_{00} - S_{10}^2}\right)^2 \left[S_{00}^2 S_{20} + S_{10}^2 S_{00} - 2S_{10}^2 S_{00} \right] \\
+  &=& \left(\frac{1}{S_{20}S_{00} - S_{10}^2}\right)^2 S_{00}\left[S_{20}S_{00} - S_{10}^2 \right] = \frac{S_{00}}{S_{20}S_{00} - S_{10}^2} \\
+  \left(\Delta \hat{b} \right)^2 &=& \left(\frac{1}{S_{20}S_{00} - S_{10}^2}\right)^2 \left[S_{20}^2 S_{00} + S_{10}^2 S_{20} - 2S_{20}S_{10}^2 \right] \\
+  &=& \left(\frac{1}{S_{20}S_{00} - S_{10}^2}\right)^2 S_{20}\left[S_{20}S_{00} - S_{10}^2 \right] = \frac{S_{20}}{S_{20}S_{00} - S_{10}^2} 
+\end{eqnarray}
+By taking the square root of these expressions, we recover equations \eqref{mhat_error} and \eqref{bhat_error}. Similarly, we can show that the off-diagonal elements give the covariance of $m$ and $b$:
+\begin{eqnarray}
+  \mbox{cov}(m,b) &=& \sum_{i=1}^{n} \left(\frac{\partial \hat{m}}{\partial y_i}\right)\left(\frac{\partial \hat{b}}{\partial y_i}\right) \sigma_i^2 \\
+  \mbox{cov}(m,b) &=& \sum_{i=1}^{n} \frac{\sigma_i^2}{(S_{20}S_{00} - S_{10}^2)^2}\left[S_{00}\frac{x_i}{\sigma_i^2} - S_{10}\frac{1}{\sigma_i^2}\right]\left[S_{20}\frac{1}{\sigma_i^2} - S_{10}\frac{x_i}{\sigma_i^2}\right] \\
+  &=& \sum_{i=1}^{n}\frac{1}{(S_{20}S_{00} - S_{10}^2)^2} \left[S_{00}S_{20}\frac{x_i}{\sigma_i^2} - S_{10}S_{20}\frac{1}{\sigma_i^2} - S_{00}S_{10}\frac{x_i^2}{\sigma_i^2} + S_{10}^2 \frac{x_i}{\sigma_i^2}\right] \\
+  \mbox{cov}(m,b) &=& \frac{S_{10}}{(S_{20}S_{00} - S_{10}^2)^2} \left[-S_{20}S_{00} + S_{10}^2\right] = \frac{-S_{10}}{S_{20}S_{00}-S_{10}^2}
+\end{eqnarray}
+Based on these results, we identify the matrix on the right-hand side of \eqref{matrix_inverted} as the \emph{covariance} or \emph{error} matrix of $m$ and $b$, as it describes the uncertainties and correlations of the best fit parameters $\hat{m}$ and $\hat{b}$.
+
+It is left as an exercise for the reader to show that the local extremum obtained by setting the partial derivatives of the $\chi^2$ function with respect to the parameters equal to zero is in fact a minimum. It is also worth noting that the linear least-squares method can be generalized to fit data with \emph{any} function that is a linear combination of its parameters, and the function can contain an arbitrary number of parameters. One must avoid ``over-fitting'', however; in general, we aim to build models which describe our data with as few adjustable parameters as possible. The job of the experimental physicist is to design experiments such that all parameters that affect the final result and its uncertainty are known as precisely as needed to achieve the desired accuracy and precision on the final result, which in turn depends on the purpose of the experiment, and the intended use of its results.
+
+\section{Error propagation example: the intersection of two lines}
+\paragraph{}
+As an example, suppose we have applied the formulas above to calculate the best fit line to two independent sets of data, resulting in two non-parallel lines $y_1 = m_1 x_1 + b_1$ and $y_2 = m_2 x_2 + b_2$. The intersection point $(x_0, y_0)$ between the two lines is found through simple algebra using the fact that the point $(x_0, y_0)$ lies on both lines:
+\begin{eqnarray}
+  y_0 &=& m_1 x_0 + b_1 = m_2 x_0 + b_2 \\
+  \Rightarrow x_0 &=& \frac{b_1 - b_2}{m_2 - m_1} \\
+  y_0 &=& m_1 \frac{b_1 - b_2}{m_2 - m_1} + b_1 = m_2 \frac{b_1 - b_2}{m_2 - m_1} + b_2 \\
+  &=& \frac{m_2 b_1 - m_1 b_2}{m_2 - m_1} 
+\end{eqnarray}
+In both cases, the best fit slope and intercept parameters have associated uncertainties and correlations. Because the parameters are correlated, we cannot use the standard error propagation formula, which assumes a diagonal covariance matrix. Instead, we have to figure out how to propagate errors on correlated variables through to functions of those variables. Let us consider how an arbitrary function of two variables $f(m,b)$ changes in response to infinitesimal changes $dm, db$ in its variables. Using a suggestive notation, we calculate the change in $f$ relative to its value at a fixed point $f(\hat{m}, \hat{b})$:
+\begin{eqnarray}
+  df \equiv f(\hat{m} + dm, \hat{b} + db) - f(\hat{m}, \hat{b}) &=&  \left.\frac{\partial f}{\partial m}\right|_{\hat{m}} dm + \left. \frac{\partial f}{\partial b}\right|_{\hat{b}} db,
+\end{eqnarray}
+ where the partial derivatives are evaluated at the initial values $\hat{m}, \hat{b}$. What we are really after is the \emph{variance} of $f$ defined as its mean squared deviation from its best-fit value $\hat{f} \equiv f(\hat{m}, \hat{b})$. In the approximation where the errors in $m$ and $b$ are sufficiently small that the ``infinitesimal'' approximation to $df$ is valid we can estimate $\sigma_f^2$ by squaring $df$ and taking its expectation value:
+\begin{eqnarray}
+  \sigma_f^2 &\equiv& \left<(f - \hat{f})^2 \right> \approx \left< df^2 \right> = \left(\frac{\partial f}{\partial m}\right)^2 \sigma_m^2  + \left(\frac{\partial f}{\partial b}\right)^2 \sigma_b^2 + 2\left(\frac{\partial f}{\partial m}\right)\left(\frac{\partial f}{\partial b}\right) \mbox{cov}(m, b) 
+\end{eqnarray}
+In terms of the \emph{covariance matrix} $M$ of $m$ and $b$, we can write 
+\begin{eqnarray}
+  \sigma_f^2 &\equiv& \mathbf{d}^T M \mathbf{d},
+\end{eqnarray}
+where  
+\begin{eqnarray}
+  \mathbf{d} &\equiv& \left(\begin{array}{c} \frac{\partial f}{\partial m} \\ \frac{\partial f}{\partial b} \end{array} \right) 
+\end{eqnarray}
+is the column-vector of partial derivatives of the function, $\mathbf{d}^T$ is the transpose of $\mathbf{d}$, and $M$ is the \emph{covariance matrix} of the parameters $m$ and $b$, which takes the form:
+\begin{eqnarray}
+  M &\equiv & \left(\begin{array}{cc} \sigma_m^2 & \mbox{cov}(m,b) \\ \mbox{cov}(m,b) & \sigma_b^2 \end{array} \right)
+\end{eqnarray}
+If the covariance matrix is known, then we can proceed to the results. The derivation above considered a function of only two variables, but the generalization to $n$ variables is straight-forward. For a function $f(x_1, x_2, \ldots, x_n)$, the vector of partial derivatives is 
+\begin{eqnarray}
+  \mathbf{d} &=& \left(\begin{array}{c} \frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\partial f}{\partial x_n} \end{array}\right)
+\end{eqnarray} 
+and the covariance matrix is given by
+\begin{eqnarray}
+  M &=& \left(\begin{array}{ccc} \sigma_1^2 & \ldots & \mbox{cov}(x_1, x_n) \\ \vdots & \ddots & \vdots \\ \mbox{cov}(x_n, x_1) & \ldots & \sigma_n^2 \end{array}\right)
+\end{eqnarray}
+In words, the diagonal elements $M_{ii}$ give the variances $\sigma_i^2$, while the off-diagonal elements $M_{ij}$ give the covariances $\mbox{cov}(x_i, x_j)$.
+
+In our example of finding the intersection of two lines, we have two functions $x_0(m_1, b_1, m_2, b_2)$ and $y_0(m_1, b_1, m_2, b_2)$, each of which is a function of four parameters. Since the two lines are obtained by fitting two independent data sets, the parameters from set 1 are uncorrelated with those of set 2. However, the two parameters describing each best-fit line \emph{are} correlated. The best estimate of the covariance matrix of the least-squares linear fit parameters is given by the inverse matrix on the right-hand side of equation \eqref{matrix_inverted}. We can construct the covariance matrix of the four parameters as follows:
+\begin{eqnarray}
+  M &=& \left(\begin{array}{cccc} \sigma_{m_1}^2 & \mbox{cov}(m_1,b_1) & 0 & 0 \\ \mbox{cov}(m_1,b_1) & \sigma_{b_1}^2 & 0 & 0 \\ 0 & 0 & \sigma_{m_2}^2 & \mbox{cov}(m_2,b_2) \\ 0 & 0 & \mbox{cov}(m_2,b_2) & \sigma_{b_2}^2 \end{array}\right) \\
+  M &=& \left(\begin{array}{cccc} \frac{S_{00}^{(1)}}{S_{20}^{(1)}S_{00}^{(1)} - (S_{10}^{(1)})^2} & \frac{-S_{10}^{(1)}}{S_{20}^{(1)}S_{00}^{(1)} - (S_{10}^{(1)})^2} & 0 & 0 \\ \frac{-S_{10}^{(1)}}{S_{20}^{(1)}S_{00}^{(1)} - (S_{10}^{(1)})^2} & \frac{S_{20}^{(1)}}{S_{20}^{(1)}S_{00}^{(1)} - (S_{10}^{(1)})^2} & 0 & 0 \\ 0 & 0 & \frac{S_{00}^{(2)}}{S_{20}^{(2)}S_{00}^{(2)} - (S_{10}^{(2)})^2} & \frac{-S_{10}^{(2)}}{S_{20}^{(2)}S_{00}^{(2)} - (S_{10}^{(2)})^2} \\ 0 & 0 & \frac{-S_{10}^{(2)}}{S_{20}^{(2)}S_{00}^{(2)} - (S_{10}^{(2)})^2} & \frac{S_{20}^{(2)}}{S_{20}^{(2)}S_{00}^{(2)} - (S_{10}^{(2)})^2} \end{array}\right),
+\end{eqnarray} 
+where on the second line we have substituted the $2 \times 2$ error matrices resulting from the linear least-squares fits to the two independent data sets, and the super-scripts $^{(1)}$ and $^{(2)}$ refer to the respective data sets. 
+
+In the Kater's pendulum lab, you are asked to calculate the intersection point between two lines, where each line represents a set of period measurements about one of the two pivot points on opposite ends of the pendulum, as a function of the position of the larger mass relative to the end of the bar. For the extraction of $g$, we are interested in determining the value of the oscillation period at the intersection point and its uncertainty. Therefore, we need to propagate the uncertainties in the measured period values through to the uncertainty on the $y$-coordinate of the intersection point. The covariance matrix of the four best-fit parameters is given above. The remaining ingredient is the vector of partial derivatives:
+\begin{eqnarray}
+  \mathbf{d} &=& \left(\begin{array}{c} \frac{\partial y_0}{\partial m_1} \\ \frac{\partial y_0}{\partial b_1} \\ \frac{\partial y_0}{\partial m_2} \\ \frac{\partial y_0}{\partial b_2} \end{array}\right) = \left(\begin{array}{c} \frac{m_2(b_1-b_2)}{(m_2-m_1)^2} \\ \frac{m_2}{m_2-m_1} \\ \frac{-m_1(b_1-b_2)}{(m_2-m_1)^2} \\ \frac{-m_1}{m_2-m_1}\end{array}\right),
+\end{eqnarray}
+where each element of $\mathbf{d}$ is evaluated at the best-fit values of $m_1$, $b_1$, $m_2$ and $b_2$. With the error matrix and the vector of partial derivatives in hand, the error in $y_0$ is given by $\Delta y_0 = \sqrt{\mathbf{d}^{T} M \mathbf{d}}$, which accounts for the uncertainties \emph{and} the correlations among the parameters. 
+
+\section{Constructing error ellipses}
+\paragraph{}
+To fully appreciate the meaning of the error matrix, let us consider, for the linear-least squares problem, the behavior of $\chi^2$ for small deviations of $m$ and $b$ from their best-fit estimators $\hat{m}$ and $\hat{b}$. We start by Taylor-expanding $\chi^2$ about its local minimum at $(\hat{m}, \hat{b})$ up to second-order:
+\begin{eqnarray}
+  \chi^2(m,b) &=& \chi^2(\hat{m},\hat{b}) + \frac{\partial \chi^2}{\partial m} (m - \hat{m}) + \frac{\partial \chi^2}{\partial b} (b - \hat{b}) + \nonumber \\
+  & & \frac{1}{2}\frac{\partial^2 \chi^2}{\partial m^2} (m - \hat{m})^2 + \frac{1}{2} \frac{\partial^2 \chi^2}{\partial b^2} (b-\hat{b})^2 + \frac{\partial^2 \chi^2}{\partial m \partial b} (m - \hat{m})(b-\hat{b}) + \ldots \label{chi2taylorexpand}
+\end{eqnarray}
+Because the partial derivatives are evaluated at $\hat{m}$ and $\hat{b}$, the first partial derivatives vanish. The second partial derivatives are:
+\begin{eqnarray}
+  \frac{1}{2} \frac{\partial^2 \chi^2}{\partial m^2} &=&  \sum_{i=1}^{n} \frac{x_i^2}{\sigma_i^2} = S_{20} \\
+  \frac{1}{2} \frac{\partial^2 \chi^2}{\partial b^2} &=& \sum_{i=1}^{n} \frac{1}{\sigma_i^2} = S_{00} \\
+  \frac{1}{2} \frac{\partial^2 \chi^2}{\partial m \partial b} &=& \sum_{i=1}^{n} \frac{x_i}{\sigma_i^2} = S_{10} 
+\end{eqnarray}
+Because $\chi^2$ is a quadratic function of the parameters, its second partial derivatives are all constants equal to the sums over data derived above. Moreover, because the second derivatives are constant, all higher derivatives are zero, so that the second-order Taylor expansion of $\chi^2$ is exact, a result that applies generally to the \emph{linear} least-squares problem, regardless of the number of fit parameters. If we substitute the second derivatives back into the expression for $\chi^2$, we obtain:
+\begin{eqnarray}
+  \chi^2 - \chi^2_{min} &=& S_{20} (\Delta m)^2 + S_{00} (\Delta b)^2 + 2S_{10} (\Delta m)(\Delta b) \label{dchi2formula}
+\end{eqnarray}
+From this expression, we see that the contours of constant $\chi^2$ in the $(\Delta m, \Delta b)$ plane are rotated ellipses. Equation \eqref{dchi2formula} can be re-cast in matrix form as 
+\begin{eqnarray}
+  \Delta \chi^2 &=& \left(\begin{array}{cc} \Delta m & \Delta b \end{array}\right)\left(\begin{array}{cc} S_{20} & S_{10} \\ S_{10} & S_{00} \end{array}\right)\left(\begin{array}{c} \Delta m \\ \Delta b \end{array}\right) \label{dchi2_matrix}
+\end{eqnarray}
+The matrix in \eqref{dchi2_matrix} is immediately recognizable as the inverse of the covariance matrix of $m$ and $b$. We can multiply both sides of \eqref{dchi2_matrix} by the $1 \times 2$ column vector of $\Delta m$ and $\Delta b$ from the left:
+\begin{eqnarray}
+  \left(\begin{array}{c} \Delta m \\ \Delta b \end{array}\right) \Delta \chi^2  &=&  \left(\begin{array}{cc} (\Delta m)^2 & (\Delta m)(\Delta b) \\ (\Delta m)(\Delta b) & (\Delta b)^2  \end{array}\right) \left(\begin{array}{cc} S_{20} & S_{10} \\ S_{10} & S_{00} \end{array}\right) \left(\begin{array}{c} \Delta m \\ \Delta b \end{array}\right) \label{outerprod} 
+\end{eqnarray}
+where on the right-hand side, we have formed a $2 \times 2$ matrix from the ``outer product'' of a $1 \times 2$ column vector and a $2 \times 1$ row vector. When written in this form, if we take the ``expectation value'' of both sides (i.e., the average of both sides over the theoretical distribution of the results a large number of equivalent experiments), we find:
+\begin{eqnarray}
+  \overline{ \Delta \chi^2 } \left(\begin{array}{c} \overline{\Delta m} \\ \overline{\Delta b} \end{array}\right) &=& \left(  \begin{array}{cc} \sigma_m^2 & \mbox{cov}(m,b) \\ \mbox{cov}(m,b) & \sigma_b^2 \end{array} \right) \left(\begin{array}{cc} S_{20} & S_{10} \\ S_{10} & S_{00} \end{array}\right)\left(\begin{array}{c} \overline{\Delta m} \\ \overline{\Delta b} \end{array}\right)  \label{expectation} \\
+  \overline{\Delta \chi^2} \left(\begin{array}{c} \overline{\Delta m} \\ \overline{\Delta b} \end{array}\right) &=& \left(\begin{array}{cc} 1 & 0 \\ 0 & 1 \end{array}\right) \left(\begin{array}{c} \overline{\Delta m} \\ \overline{\Delta b} \end{array}\right)  = \left(\begin{array}{c} \overline{\Delta m} \\ \overline{\Delta b} \end{array}\right) \\
+  \Rightarrow \overline{\Delta \chi^2} &=& 1
+\end{eqnarray} 
+In other words, the product of the two $2 \times 2$ matrices on the right-hand side of \eqref{expectation} equals $M M^{-1} = I$, where $M$ is the covariance matrix of $m$ and $b$ and $I$ is the identity matrix. This implies that the expectation value $\overline{\Delta \chi^2} = 1$. The meaning of this result is that the error ellipse corresponding to $\Delta \chi^2(\Delta m, \Delta b) = 1$ traces out the $1\sigma$ contour in the ($\Delta m$, $\Delta b$) plane. 
+
+Setting $\Delta \chi^2 = 1$ in \eqref{dchi2formula}, we can explore the properties of the error ellipse:
+\begin{eqnarray}
+  1 &=& S_{20} (\Delta m)^2 + S_{00} (\Delta b)^2 + 2S_{10} (\Delta m)(\Delta b) \label{errorellipse_1sig}
+\end{eqnarray}
+It is easy to show, for example, that $\Delta m$ and $\Delta b$ attain extrema at $\pm \sigma_m$ and $\pm \sigma_b$, respectively. It can also be shown that the semi-major and semi-minor axes of the error ellipse are given by the \emph{eigenvalues} of the error matrix. The eigenvalues are found by solving the characteristic equation for the covariance matrix:
+\begin{eqnarray}
+  \det(M - \lambda I) &=& 0 \\
+  0 &=& \left(\frac{S_{00}}{S_{20}S_{00}-S_{10}^2} - \lambda\right)\left(\frac{S_{20}}{S_{20}S_{00}-S_{10}^2} - \lambda\right) - \frac{S_{10}^2}{(S_{20}S_{00}-S_{10}^2)^2} \\
+  0 &=& \lambda^2 - \lambda \frac{S_{00}+S_{20}}{S_{20}S_{00} - S_{10}^2} + \frac{1}{S_{20}S_{00}-S_{10}^2} \\
+  \lambda_{\pm} &=& \frac{1}{2}\left[\frac{S_{00}+S_{20}}{S_{20}S_{00}-S_{10}^2} \pm \sqrt{\frac{(S_{00}+S_{20})^2}{(S_{20}S_{00}-S_{10}^2)^2} - 4\frac{1}{S_{20}S_{00}-S_{10}^2}}\right] \\ 
+  \lambda_{\pm} &=& \frac{1}{2} \left[\frac{S_{00}+S_{20}}{S_{20}S_{00}-S_{10}^2} \pm \frac{1}{S_{20}S_{00}-S_{10}^2}\sqrt{(S_{00}+S_{20})^2 - 4(S_{20}S_{00}-S_{10}^2)}\right] \\
+  \lambda_{\pm} &=& \frac{S_{00}+S_{20} \pm \sqrt{(S_{00}-S_{20})^2 + 4S_{10}^2}}{2(S_{20}S_{00}-S_{10}^2)}
+\end{eqnarray}
+The reason the eigenvalues of the covariance matrix equal the semi-major and semi-minor axes of the ellipse has to do with the procedure for diagonalizing the covariance matrix, which involves transforming the matrix to a coordinate system whose axes correspond to the eigenvectors of the matrix. The matrix expressed in this coordinate system is diagonal, with the diagonal elements equal to the eigenvalues of the matrix. The equation for the error ellipse can be expressed in a form with no cross-term via such a coordinate rotation. If we write the general equation for an ellipse in the form $1 = A x^2 + B y^2 + Cxy = a {x'}^2 + b{y'^2}$, where $x' = x \cos \theta - y \sin \theta$ and $y' = x \sin \theta + y \cos \theta$ are the rotated coordinates, then the values of $a$, $b$ and $\theta$ can be found be simultaneously equating the coefficients of $x^2$, $y^2$ and $xy$:
+\begin{eqnarray}
+  A x^2 + By^2 + Cxy &=& a (x^2 \cos^2 \theta + y^2 \sin^2 \theta - 2xy \sin \theta \cos \theta) + \nonumber \\ 
+  & & b(x^2 \sin^2 \theta + y^2 \cos^2 \theta + 2xy \sin \theta \cos \theta) \\
+  A &=& a \cos^2 \theta + b \sin^2 \theta \\
+  B &=& a \sin^2 \theta + b \cos^2 \theta \\
+  C &=& (b - a) \sin(2\theta) 
+\end{eqnarray}   
+The solution for $a$, $b$ and $\theta$ can be obtained easily as follows:
+\begin{eqnarray}
+  A + B &=& a + b \\
+  A - B &=& (a-b)\cos (2\theta) \\
+  \Rightarrow \frac{C}{B-A} &=& \tan(2\theta), 
+\end{eqnarray}
+which then implies:
+\begin{eqnarray}
+  \frac{A-B}{\cos (2\theta)} &=& 2a - A - B = A + B - 2b \\
+  a &=& \frac{A\cos^2 \theta - B \sin^2 \theta }{\cos (2\theta)}
+  b &=& \frac{B\cos^2 \theta - A \sin^2 \theta }{\cos (2\theta)}
+  \frac{1}{\cos (2\theta)} &=& \sqrt{1+\tan^2 (2\theta)} = \sqrt{ 1 + \frac{C^2}{(B-A)^2}} = \frac{\sqrt{(B-A)^2 + C^2}}{B-A} 
+\end{eqnarray}
+
+From the results for the linear least-squares problem, we can straightforwardly write down the prescription for the general least-squares problem. Let us define the $\chi^2$ statistic for a data set where the theoretical model for $y$ is a general non-linear function $f$ depending on the independent variable $x$ and a set of fit parameters $p_j$, $j=1,\ldots,n$:
+\begin{eqnarray}
+  \chi^2 &=& \sum_{i=1}^{N} \left(\frac{y_i - f(x_i; p_1,\ldots,p_n)}{\sigma_i}\right)^2
+\end{eqnarray}
+The best-fit values of the parameters are found by solving the $n$ simultaneous equations 
+\begin{eqnarray}
+  \frac{\partial \chi^2}{\partial p_j} &=& 0
+\end{eqnarray}
+Following the results of the linear least-squares case, the error matrix of the parameters is found by inverting the following matrix of second-derivatives of $\chi^2$ with respect to the parameters:
+\begin{eqnarray}
+  \left(M^{-1}\right)_{ij} &=& \frac{1}{2} \frac{\partial^2 \chi^2}{\partial p_i \partial p_j}, \label{error_matrix_definition}
+\end{eqnarray}
+where the derivatives are evaluated at the function minimum. In contrast to the linear case, for which the error matrix calculation is ``exact'', \eqref{error_matrix_definition} represents the first-order approximation to the error matrix for non-linear functions, in which the higher-order terms in the Taylor expansion of $\chi^2$ about its minimum are neglected. It is a good approximation when the errors on the parameters are sufficiently small compared to the higher derivatives of the $\chi^2$ function. For all but the simplest of non-linear functions, the equations for the minimum $\chi^2$ cannot be solved analytically, so numerical methods must be used, such as the \emph{Solver} tool in Excel.
+ 
+ 
+\end{document}
