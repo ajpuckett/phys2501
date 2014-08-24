@@ -1,0 +1,11 @@
+      real mass,springk,bdrag,fkinetic
+      real omega0,c0,delta0,gamma,period
+      common /dhocom/mass,springk,bdrag,fkinetic,
+     +               omega0,c0,delta0,gamma,period
+      data mass,springk,bdrag,fkinetic/1,1,0,1/
+      real a(999999),b(999999)
+      integer ncoeffs
+      common /dhocoefs/ncoeffs,a,b
+      data ncoeffs/0/
+      real pi,twopi
+      parameter (pi=3.141592654,twopi=6.283185307)
