@@ -1,4 +1,4 @@
-all: linearfit.pdf
+all: linearfit.pdf linearfit_notes_andrew.pdf
 
 %.pdf: %.ps
 	ps2pdf $^ $@
