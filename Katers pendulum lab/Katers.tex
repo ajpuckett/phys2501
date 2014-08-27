@@ -158,6 +158,7 @@ with a Reversible Pendulum}
 %
 
 \section{Introduction}
+\label{sec:introduction}
 
 The local gravitational acceleration constant $g$ can be measured with
 surprising precision using a very simple apparatus known as
@@ -248,7 +249,7 @@ a common value $\tau_0$,
 \end{eqnarray}
 Solving for $g$ leads to the final result,
 \begin{equation}
-g = \left(\frac{2\pi}{\tau_0}\right)^2 L 
+g = \left(\frac{2\pi}{\tau_0}\right)^2 L \label{eq:finalresult}
 \end{equation}
 where $L = a+b$ is the distance between the pivots.
 
@@ -360,30 +361,30 @@ calling this data set B1.
 Remove the pendulum, rest it on blocks on the bench (not on the
 knife edge assembly!) and measure the distance from the near edge of the
 large mass to the end of the bar using a vernier caliper.  Record this
-value as $r_1$, together with your measurement error $\Delta r_1$.
+value as $x_1$, together with your measurement error $\Delta x_1$.
 If you are careful, you should be able to measure $x$ with a precision
 of 0.05 mm or better.  Then loosen the large nuts on the large mass and
 slide it to a new position, and tighten them again, making sure that the
 mass will not slip when the bar is hanging vertically.  Measure the new
 distance from the edge of the mass to the end of the bar, and record this
-value and its error as $r_2 \pm \Delta r_2$.  Repeat the period
+value and its error as $x_2 \pm \Delta x_2$.  Repeat the period
 measurements about pivots A and B, labeling the data sets A2 and B2,
 respectively.
 
-Based upon how the periods changed between positions $r_1$ and $r_2$,
+Based upon how the periods changed between positions $x_1$ and $x_2$,
 guess at what value of $x$ the two periods should be approximately the
-same, and write that value down as $r_0$.  You will never actually do
-a measurement exactly at $r_0$, but it will serve as a reference value
-for what follows.  Then move the large mass to a position close to $r_0$,
-then measure it and record its value as $r_3$.
+same, and write that value down as $x_0$.  You will never actually do
+a measurement exactly at $x_0$, but it will serve as a reference value
+for what follows. Move the large mass to a position close to $x_0$,
+then measure it and record its value as $x_3$.
 Repeat the two period measurements and record data sets A3 and B3.
 If your guess was accurate, they should be much closer than they were
-at $r_1$ or $r_2$.  If you guess was off, repeat this process and adjust
-the value you assigned to $r_0$ until you are satisfied.  After this,
-move to a region in $x$ past $r_0$ where the order of the two periods
+at $x_1$ or $x_2$.  If you guess was off, repeat this process and adjust
+the value you assigned to $x_0$ until you are satisfied.  After this,
+move to a region in $x$ past $x_0$ where the order of the two periods
 is reversed and take another set of measurements.  Repeat this process
 for a total of 8-10 values of $x$, with approximately half of them
-on each side of $r_0$.  Note that it is not important that you manage
+on each side of $x_0$.  Note that it is not important that you manage
 to land exactly on the cross-over point, because it can be determined
 with high precision by fitting straight lines to the two sets of data
 and solving for the intersection of the two lines.  This procedure is
@@ -405,30 +406,73 @@ you may use in your analysis.
 The period data you collected were recorded in run sequences labeled A$i$ and
 B$i$ where $i=1..n$.  Examine each run for sag, and select a subset from each
 to be used for computing the average, as described in the previous section.
-Compute the combined average period for all of the selected data in a given 
-data set A$i$ or B$i$ and call it $y_{Ai}$ or $y_{Bi}$.  Compute the RMS
-(root-mean-square) on the combined data in a given dataset and use that to
-estimate the errors on the individual period measurements.  That value
-divided by the square root of the number of individual periods in the data
-set is the error $\Delta y_{Ai}$ or $\Delta y_{Bi}$.  Arrange these in
-6 adjacent columns in the spreadsheet, with columns labeled $x$, $\Delta x$,
-$y_A$, $\Delta y_A$, $y_B$, and $\Delta y_B$.  Let $x_i=r_i-r_0$ and
-$\Delta x_i=\Delta r_i$.  When you are finished with this, the spreadsheet
-will contain a data block with $6\times n$ values.
+% Compute the combined average period for all of the selected data in a given 
+% data set A$i$ or B$i$ and call it $y_{Ai}$ or $y_{Bi}$.
+% Compute the RMS
+% (root-mean-square) deviation from the mean of the combined data in a given dataset and use that to
+% estimate the errors on the individual period measurements. That value
+% divided by the square root of the number of individual periods in the data
+% set is the error $\Delta y_{Ai}$ or $\Delta y_{Bi}$.
+For each run, compute the \emph{average} of all selected period
+measurements. Estimate the error in the average period by computing
+the standard deviation of the selected data sample and dividing the
+result by the square root of the number of measurements included in the
+average. Note, however, that this prescription gives a misleading
+estimate of the error in the average period, because it assumes that the variations observed in the data are caused
+by random errors in the measurement of an unchanging quantity, when in
+fact the magnitude of the decrease in period during the run is much
+greater than the typical error in a single measurement. 
 
-Create a scatter plot with one kind of marker at the points ($x_i$,$y_{Ai}$)
-and a different marker at the points ($x_i$,$y_{Bi}$).  Attach vertical
-error bars to each marker with sizes given by the corresponding  $\Delta y$
-values.  Be sure to adjust the vertical scale of the plot and choose a size
-for the markers that makes the error bars visible.  Label the axes with
-descriptive titles with units as appropriate.  Horizontal errors bars
-depicting the values of $\Delta x_i$ are allowed but not required.
-There should be no lines joining the points.
+Use Eq.~\eqref{eq:tauofalpha} to correct the average period from each run using the average amplitude of oscillation to
+obtain the ideal small-angle period $\tau(0)$. Estimate the
+uncertainty $\Delta \tau(0)$ in the corrected period, keeping in
+mind that there is uncertainty not only in the period measurement
+itself, but also in the determination of the amplitude.  Knowing the initial ($\alpha_i$) and final ($\alpha_f$)
+amplitudes of oscillation for each run, and assuming that the amplitude
+decreases linearly with time from
+the beginning of the run to the end, a good approximation
+to the average amplitude is the average of the initial and final
+amplitudes: $\left<\alpha \right> =
+\frac{1}{2}\left(\alpha_i + \alpha_f \right)$. Alternatively, if only
+the initial amplitude is known, the final amplitude can be estimated
+from the ratio of the initial and final periods using $\tau_f/\tau_i \approx
+(1+\alpha_f^2)/(1+\alpha_i^2)$, assuming that the
+decrease in period from the initial to the final measurement is entirely
+explained by deviations from the small-angle approximation. 
 
-Now on top of the scatter plot superimpose two straight lines, one to
-describe how the $y_A$ values vary with $x$ and the other for the $y_B$.
-It helps to choose colors for the lines that match the colors of the data
-markers.  The equations for these lines are
+% Arrange these in
+% 6 adjacent columns in the spreadsheet, with columns labeled $x$, $\Delta x$,
+% $y_A$, $\Delta y_A$, $y_B$, and $\Delta y_B$.  Let $x_i=r_i-r_0$ and
+% $\Delta x_i=\Delta r_i$.  When you are finished with this, the spreadsheet
+% will contain a data block with $6\times n$ values.
+% Create a scatter plot with one kind of marker at the points ($x_i$,$y_{Ai}$)
+% and a different marker at the points ($x_i$,$y_{Bi}$).  Attach vertical
+% error bars to each marker with sizes given by the corresponding  $\Delta y$
+% values.  Be sure to adjust the vertical scale of the plot and choose a size
+% for the markers that makes the error bars visible.  Label the axes with
+% descriptive titles with units as appropriate.  Horizontal errors bars
+% depicting the values of $\Delta x_i$ are allowed but not required.
+% There should be no lines joining the points.
+
+% Now on top of the scatter plot superimpose two straight lines, one to
+% describe how the $y_A$ values vary with $x$ and the other for the $y_B$.
+% It helps to choose colors for the lines that match the colors of the data
+% markers.  The equations for these lines are
+At this point you have a set of corrected periods $\tau_{Ai}(0)$ and
+$\tau_{Bi}(0)$ measured at $n$ positions $x_i$ of the larger
+mass relative to the end of the bar. Assuming the large mass is closer
+to pivot point A as depicted in Fig.~\ref{katersfig}, the position of
+the center of mass moves away from pivot point $a$ toward pivot point
+$b$. Meanwhile, the moment of inertia for oscillations about pivot
+point $b$ decreases. Define the moment of inertia in the absence of
+the large mass as $I_c^A$ for oscillations about pivot point $A$ and
+$I_c^B$ for oscillations about pivot point B. Define the distance from
+the end of the bar where the large mass is attached to pivot point A (B) as $d_A (d_B)$ and the radius
+of the large mass as $r_{big}$. Then, the
+moments of inertia as functions of position become $I_a (x) = I_c^A +
+M(d_A - r_{big} - x)^2$ and $I_b(x) = I_c^B + M(d_B - r_{big} -
+x)^2$. The position of the center of mass 
+
 \begin{eqnarray}
 f_A(x) &=& m_A x + t_A \label{eq:lineA} \\
 f_B(x) &=& m_B x + t_B \label{eq:lineB}
