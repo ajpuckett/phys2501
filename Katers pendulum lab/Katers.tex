@@ -460,33 +460,74 @@ explained by deviations from the small-angle approximation.
 % markers.  The equations for these lines are
 At this point you have a set of corrected periods $\tau_{Ai}(0)$ and
 $\tau_{Bi}(0)$ measured at $n$ positions $x_i$ of the larger
-mass relative to the end of the bar. Assuming the large mass is closer
-to pivot point A as depicted in Fig.~\ref{katersfig}, the position of
-the center of mass moves away from pivot point $a$ toward pivot point
-$b$. Meanwhile, the moment of inertia for oscillations about pivot
-point $b$ decreases. Define the moment of inertia in the absence of
-the large mass as $I_c^A$ for oscillations about pivot point $A$ and
-$I_c^B$ for oscillations about pivot point B. Define the distance from
-the end of the bar where the large mass is attached to pivot point A (B) as $d_A (d_B)$ and the radius
-of the large mass as $r_{big}$. Then, the
-moments of inertia as functions of position become $I_a (x) = I_c^A +
-M(d_A - r_{big} - x)^2$ and $I_b(x) = I_c^B + M(d_B - r_{big} -
-x)^2$. The position of the center of mass 
-
+mass relative to the end of the bar. To determine the position where $\tau_a$ and $\tau_b$ are equal with $a \ne b$, and the corresponding period $\tau_0$, we must consider the dependence of the periods $\tau_a$ and $\tau_b$ on the position of the large weight near point A.
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{KatersModelFig.eps}
+  \end{center}
+  \caption{\label{fig:Katersmodel} Definition of distances and masses in a simplified model of the Kater's pendulum apparatus. The bar is approximated as a thin rod of length $R$ with mass $M_R$ and uniform density. Pivot points A and B are assumed equidistant from the ends of the rod, such that the midpoint between A and B coincides with the midpoint of the rod. $M_A$ and $M_B$ are assumed to be point masses. The masses satisfy $M_A > M_B$, and the distances satisfy $0 \le d_{A,B} \le \frac{R-L}{2}$.}
+\end{figure} 
+Figure~\ref{fig:Katersmodel} shows a simple model for calculating the period of Kater's pendulum. Assume that the rigid bar is a thin rod of total length $R$ and mass $M_R$ with uniform density. Then assume that the pivot points A and B are equidistant from the ends of the rod, so that the midpoint between A and B coincides with the midpoint of the rod. This assumption is not crucial, but it simplifies the algebra. Finally, assume that the weights A and B at either end are point masses at a distance $\frac{L}{2} + d_{A,B}$ from the midpoint of the rod. Define the origin of coordinates as the midpoint of the rod, with the positive $x$ direction pointing from A toward B. In this coordinate system, the position of the center of mass is given by: 
 \begin{eqnarray}
-f_A(x) &=& m_A x + t_A \label{eq:lineA} \\
-f_B(x) &=& m_B x + t_B \label{eq:lineB}
+  M x_{CM} &=& M_B (d_B + \frac{L}{2}) - M_A (d_A + \frac{L}{2} ) \nonumber \\
+  x_{CM} &=& \frac{M_B}{M} d_B + \frac{M_B -M_A}{M}\frac{L}{2} - \frac{M_A}{M}d_A \label{eq:xCM} \\ 
+  M &\equiv& M_A + M_B + M_R \nonumber 
+\end{eqnarray}
+From Eq.~\eqref{eq:xCM}, we see that the position of the center of mass is a linear function of $d_A$. It is assumed that the relationships among the various masses and distances are such that the position of the center of mass lies between A and B; i.e., $-\frac{L}{2} \le x_{CM} \le \frac{L}{2}$. The distances from each pivot to the center of mass are given by
+\begin{eqnarray}
+  a &=& x_{CM} + \frac{L}{2} = \frac{M_B}{M} d_B + \frac{M_B - M_A + M}{M}\frac{L}{2} - \frac{M_A}{M} d_A \nonumber \\
+  b &=& \frac{L}{2} - x_{CM} = -\frac{M_B}{M}d_B + \frac{M_A - M_B + M}{M} \frac{L}{2} + \frac{M_A}{M} d_A
+\end{eqnarray}
+
+Under the assumption that pivot points A and B are equidistant from the ends of the rod, the moment of inertia of the rod about either pivot point is 
+\begin{eqnarray}
+  I_R &=& I_0^R + \frac{M_RL^2}{4} \nonumber \\
+  I_0^R &=& \frac{M_R}{R}\int_{-\frac{R}{2}}^{\frac{R}{2}} x^2 dx = \frac{M_R R^2}{12} \nonumber \\
+  I_R &=& \frac{M_R}{4}\left[L^2 + \frac{R^2}{3}\right]
+\end{eqnarray}
+With the additional point masses included, the total moments of inertia for oscillations about pivot points A and B are given by
+\begin{eqnarray}
+  I_a &=& I_R + M_A d_A^2 + M_B (d_B + L)^2 \nonumber \\
+  I_b &=& I_R + M_A (d_A + L)^2 + M_B d_B^2, 
+\end{eqnarray}
+from which we see that $I_a$ and $I_b$ are quadratic functions of $d_A$.
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{KatersModelFig2.eps}
+  \end{center}
+  \caption{\label{fig:Katers_model_predict} Oscillation periods $\tau_a$ and $\tau_b$ as a function of the distance $d_A$ from pivot A to the larger weight, calculated from the simplified model of Fig.~\ref{fig:Katersmodel}, assuming $L = 1$ m, $R = 1.4$ m, $M_A = 2$ kg, $M_B = 0.4$ kg, $M_R = 3$ kg and $d_B = 10$ cm. Note that these calculations are illustrative only, and the model parameters assumed do \emph{not} necessarily coincide with the apparatus you used.}
+\end{figure}
+Figure~\ref{fig:Katers_model_predict} shows the prediction of this model for the dependence of $\tau_a$ and $\tau_b$ on the distance $d_A$ from the pivot point to the position of the larger weight, assuming masses and dimensions similar (but not identical) to the pendulum you will actually use. In general, $\tau_a$ and $\tau_b$ vary non-linearly with $d_A$ (which is related to the distance $x$ that you measured). However, if the analysis is confined to a sufficiently narrow range surrounding the intersection point between the two curves, the deviations from linearity can be ignored, and the intersection point can be located by fitting straight lines to the $x$ dependence of the corrected periods $\tau_{Ai}(0)$ and $\tau_{Bi}(0)$ in the vicinity of the intersection point.
+
+Assuming that $y_{A,Bi} \equiv \tau_{A,Bi}(0)$ depends linearly on $x_i$, determine the slope and intercept parameters $(m_A, t_A)$ and $(m_B, t_B)$ describing the lines of best fit through the data sets $(x_i,y_{Ai})$ and $(x_i,y_{Bi})$:
+\begin{eqnarray}
+y_A(x) &=& m_A x + t_A \label{eq:lineA} \\
+y_B(x) &=& m_B x + t_B \label{eq:lineB}
 \end{eqnarray}
 Define a $\chi^2$ statistic for data set A, and a separate one for data
 set B, comparing the above linear formulas with your measured values for
 the period of the pendulum.  The $\chi^2$ statistic is defined as
 \begin{equation}
-\chi^2 = \sum_{i=1}^N\left(\frac{y_i-y(x_i)}{\sigma_i}\right)^2
+\chi^2 = \sum_{i=1}^N\left(\frac{y_i-y(x_i)}{\Delta y_i}\right)^2
 \end{equation}
-Find the best-fit values for unknown parameters $m_A$,$t_A$ and $m_B$,$t_B$
-by minimizing the $\chi^2$ for each set with respect to these parameters.
-One of the by-products of this procedure is the {\em error
-matrix} that describes the uncertainties on the best-fit values.  The error
+The best-fit values for the unknown parameters $m_A$, $t_A$, $m_B$ and $t_B$ are determined by minimizing the $\chi^2$ for each data set as a function of these parameters. In the general least-squares problem where data are fitted to an arbitrary function $y = y(x;p_i,i=1,\ldots,m)$ depending on $m$ parameters $p_i$ to be optimized, $\chi^2$ is minimized by solving the $m$ simultaneous equations $\partial \chi^2/\partial p_i = 0, i=1,\ldots,m$. One of the by-products of this procedure is the {\em error matrix} that describes the uncertainties and correlations among the best-fit parameters. The diagonal elements of the error matrix give the variances of the parameters ($\mathcal{E}_{ii} \equiv \sigma^2_{p_i}$), while the off-diagonal elements give the covariances between parameters ($\mathcal{E}_{ij} \equiv \mbox{cov}(p_i,p_j), i \ne j$). The inverse of the error matrix $\mathcal{E}$ for the general least-squares problem is approximately given by the following matrix of second partial derivatives of $\chi^2$ with respect to the parameters $p_i$ and $p_j$, evaluated at the function minimum:
+\begin{eqnarray}
+  \mathcal{E}^{-1}_{ij} &=& \frac{1}{2} \frac{\partial^2 \chi^2}{\partial p_i \partial p_j} \label{Hessian}
+\end{eqnarray}
+The matrix of partial derivates in equation~\eqref{Hessian}, often called the ``Hessian'', is simply the matrix of coefficients of the quadratic terms of order $(p_i - \hat{p}_i)(p_j - \hat{p}_j)$ in the Taylor expansion of $\chi^2$ about the local minimum corresponding to the best-fit values of the parameters (denoted by $\hat{p}_i$). For any $\chi^2$ in which the fit function $y(x; p_i)$ is a \emph{linear} function of the parameters $p_i$, equation~\eqref{Hessian} for the error matrix is \emph{exact}, since all higher derivatives vanish. 
+
+Now suppose we have performed a fit and determined the best-fit values of several parameters along with their error matrix, and we want to compute the error on a function $f(p_i)$ of the parameters. We treat the parameter errors as random variables whose variances and covariances are sufficiently ``small'' that we can approximate the function $f$ in the vicinity of the best-fit values of its parameters by its first-order Taylor expansion:
+\begin{eqnarray}
+  df &=& \sum_{i=1}^{n} \frac{\partial f}{\partial p_i} dp_i \label{eq:Taylor1},
+\end{eqnarray}
+As usual, the partial derivatives are evaluated using the best-fit parameter values. We are interested in the \emph{variance} (standard deviation squared) of $f$, so we square Eq.~\eqref{eq:Taylor1} and take its ``expectation value'' (denoted $\left<\ldots\right>$), which is the average of $(df)^2$ over the hypothetical distribution of an infinite number of similar experiments in which the ``best-fit'' value of $f$ varies randomly in response to random variations in the parameters due to experimental errors:   
+\begin{eqnarray}
+  \left<(df)^2\right> &=& \sum_{i=1}^{n}\sum_{j=1}^n \left(\frac{\partial f}{\partial p_i}\right)\left(\frac{\partial f}{\partial p_j}\right)\left<dp_i dp_j\right> \nonumber \\
+  \sigma_f^2 &=& \sum_{i=1}^{n}\sum_{j=1}^n \left(\frac{\partial f}{\partial p_i}\right)\left(\frac{\partial f}{\partial p_j}\right) \mathcal{E}_{ij}, \label{errorpropagation}
+\end{eqnarray}
+where on the second line the expectation value $\left<dp_i dp_j\right>$ has been replaced by the error matrix element $\mathcal{E}_{ij}$. 
+
+The error
 matrix from a linear least-squares fit is a 2x2 matrix $\cal{E}$ of the
 following form.
 \begin{equation}
@@ -502,35 +543,14 @@ $C_{mt}$ is their covariance.
 With estimates for $m_A,t_A$ and $m_B,t_B$ and their error matrices in hand,
 it is time to solve for the intersection of the two lines.  For the purposes
 of this experiment, only the $y$-value at the intersection is needed, not the
-$x$-value.  The estimated value of $y$ at the intersection will be written
-as $y_0$ and its error as $\Delta y_0$.
+$x$-value. Denote the estimated value of $y$ at the intersection as $y_0$ and its error as $\Delta y_0$.
 \begin{equation}
 y_0 = \frac{m_At_B-m_Bt_A}{m_A-m_B} \label{eq:intersect}
 \end{equation}
-To find the error on $y_0$, we need to expand it in a Taylor series about
-the best-fit values for the parameters, and then invoke the general rule
-about the propagation of errors when summing random variables.  If one has
-two random variables $x$ and $y$ and one defines a new random variable $z$
-as $z=ax+by$ with arbitrary constants $a,b$, then the variance on $z$ is
-\begin{equation}
-V_z = a^2 V_x + b^2 V_y + 2ab C_{xy}
-\label{eq:variancesum}
-\end{equation}
-where $V_x$ is the variance of $x$ alone, $V_y$ is the variance of $y$ alone,
-and $C_{xy}$ is their covariance.  To apply this to Eq.~\ref{eq:intersect},
-note that
-\begin{equation}
-dy_0 = \frac{\partial y_0}{\partial m_A} dm_A +
-\frac{\partial y_0}{\partial t_A} dt_A +
-\frac{\partial y_0}{\partial m_B} dm_B +
-\frac{\partial y_0}{\partial t_B} dt_B
-\label{eq:taylorex}
-\end{equation}
-and that there are covariances between $m_A$ and $t_A$, and between
-$m_B$ and $t_B$, but those that mix members of the A and B sets are zero.
-Apply the principle given in Eq.~\ref{eq:variancesum} to Eq.~\ref{eq:taylorex}
-to obtain the variance on the value $y_0$ obtained using
-Eq.~\ref{eq:intersect}.  The error $\Delta y_0$ is the square root of
+To find the error on $y_0$, we invoke the general prescription for the propagation of uncertainties and correlations from random variables to functions of those variables as described above, recalling that there are covariances between $m_A$ and $t_A$, and between
+$m_B$ and $t_B$, but the covariances between the parameters describing data sets A and B are zero.
+Apply the principle given in Eq.~\ref{errorpropagation} to obtain the variance on the value $y_0$ obtained using
+Eq.~\ref{eq:intersect}. The error $\Delta y_0$ is the square root of
 the variance.
 
 The final analysis step is to extract an estimate $\hat{g}$ for the local
