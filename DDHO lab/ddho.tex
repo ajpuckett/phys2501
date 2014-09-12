@@ -758,7 +758,10 @@ to their best-fit values on the spreadsheet.
 Use the data analysis procedure outlined above to fit your transient
 response data to a hypothesis of the form given in Eq.~\ref{eq:dhosol}.
 All 4 parameters $x_0$, $\delta_0$, $\omega_0$, and $\Gamma$ should be
-free parameters in the fit.  Make sure that the best-fit $\chi^2$ value
+free parameters in the fit.  You should also introduce a fifth
+parameter $x_{eq}$ to account for the non-zero value of the equilibrium
+$x$-value around which the oscillations take place.
+Make sure that the best-fit $\chi^2$ value
 is reasonable.  Extract errors for the best-fit parameter $\Gamma$ and
 the quantity $\omega$ based on best-fit parameters $\omega_0$ and $\Gamma$.
 Repeat the analysis for each data set taken with under different damping
@@ -773,30 +776,46 @@ and that these variations are well outside the error bars.
 Use the data analysis procedure outlined above to fit your data that
 were taken in the presence of a sinusoidal driving force to the general
 form given in Eq.~\ref{eq:dhosol4}, interpreting the measured value as the
-real part of the complex function $x$ in Eq.~\ref{eq:dhosol4}.  Before 
-doing this fit, you should shift the time origin so that the phase of
-the driving force obeys equation Eq.~\ref{eq:F}, which states that the
-sinusoidal driving force should be passing through a maximum at $t=0$.
-This way the phase $\phi$ that you obtain from the fit to the response
-waveform will be relative to the phase of the driving force, and not
-relative to some arbitrary computer clock.  There should be a total of
-6 free parameters in the fit: the same original set $x_0$, $\delta_0$,
-$\omega_0$, and $\Gamma$ used in the transient response analysis, and
-the 3 new free parameters describing the steady-state response which
-are $\omega_{_D}$, $|A|$, and $\phi$.
+real part of the complex function $x$ in Eq.~\ref{eq:dhosol4}, which can
+be written as follows.
+\begin{equation}
+x(t) = x_{eq} + x_0 e^{-\Gamma t} \sin(\omega t + \delta_0) 
+              + A \sin(\omega_{_D} t + \phi)
+\label{eq:dhosol4R}
+\end{equation}
+There should be a total of 8 free parameters in the fit: the original
+set $x_{eq}$, $x_0$, $\delta_0$, $\omega_0$, and $\Gamma$ used in the
+transient response analysis, and the 3 new free parameters describing
+the steady-state response which are $\omega_{_D}$, $|A|$, and $\phi$.
+
+To interpret the value of $\phi$, you also need to measure the phase
+of the driving force. When you collected the data for the steady-state
+response, you should also have recorded the driving waveform that went
+with it. The driving waveform can be fit to a similar formula to
+Eq.~\ref{eq:dhosol4R} with its own values for $x_{eq}$, $|A|$, and $\phi$.
+This is the driving term so there is no transient part, which means
+you can set $x_0=0$ in this fit and leave out fit parameters $\Gamma$,
+$\omega_t$, and $\delta_0$.  The object of this fit is to extract the 
+amplitude and phase of the driving force, which you can call $|A_{_D}|$
+and $\phi_{_D}$ to distinguish them from the $|A|$ and $\phi$ that were
+obtained from the fit to the oscillator response data. In the end,
+what you will want to get from these fits are the amplitude ratio
+$|A/A_{_D}|$, and the difference $\phi - \phi_{_D}$ which is called
+the ``phase shift.''
 
 Repeat the above analysis for all 10 data sets which you took at different
 frequencies $\omega_{_D}$ around the resonance peak.  Check that all of
 the values of $\omega_{_D}$ returned from the fits are consistent with the
 frequency settings selected for the driving force.  Plot the values of
-$|A|$ and $\phi$ as functions of driving force $\omega_{_D}$.  The errors
-from the fit procedure described above should be included on the plot as
-vertical error bars.  On the same plots, draw curves for the predicted 
-functional form of $|A|$ and $\phi$ given in Eq.~\ref{eq:AofwMP}, using
-the values of $\omega_0$ and $\Gamma$ that you obtained from the analysis
-of the transient response under the same damping conditions as were used
+the amplitude ratio and the phase shift as functions of driving force
+$\omega_{_D}$.  The errors from the fit procedure described above should be
+included on the plot as vertical error bars.  On the same plots, draw curves
+for the predicted functional form of $|A|$ and $\phi$ given in
+Eq.~\ref{eq:AofwMP}, using the values of $\omega_0$ and $\Gamma$
+that you obtained from the analysis of the transient response under
+the same damping conditions as were used
 for the measurements with the sinusoidal driver.  These curves are 
-predictions for the behavior of these two quantities $|A|$ and $\phi$
+predictions for the behavior of the amplitude ratio and the phase shift
 without any free parameters, so there is no fit to be done at this point.
 Compute the $\chi^2$ for these data against the functions predicted by
 linear response theory.
