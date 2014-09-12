@@ -1,4 +1,4 @@
-all: example.pdf
+all: example.pdf abstract_examples.pdf
 
 %.pdf: %.ps
 	ps2pdf $^ $@
