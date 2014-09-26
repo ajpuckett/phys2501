@@ -1,0 +1,119 @@
+\documentclass{revtex4}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\begin{document}
+\title{Lecture notes on probability and statistics relevant to experiments in PHYS 2501W}
+\author{Prof. Andrew Puckett}
+\affiliation{Dept. of Physics, University of Connecticut}
+\date{\today}
+\maketitle
+\section{Definition of Probability Distribution, Mean, and Variance}
+For a continuous random variable $x$, we define the probability density function or distribution $P(x)$ such that $\int_a^b P(x) dx$ is the probability that $x$ lies between $a$ and $b$. $P(x)$ is normalized so that its integral over all possible values of $x$ is one:
+\begin{eqnarray}
+  \int_{-\infty}^{\infty} P(x) dx = 1
+\end{eqnarray}
+We define the \emph{expectation value} of a function or operator $\mathcal{O}(x)$ as 
+\begin{eqnarray}
+  \left<\mathcal{O}(x) \right> &=& \int_{-\infty}^{\infty} \mathcal{O}(x) P(x) dx
+\end{eqnarray}
+We define the mean $\mu$ and the variance $\sigma^2$ of $x$ as 
+\begin{eqnarray}
+  \mu &=& \left<x\right> = \int_{-\infty}^\infty x P(x) dx \nonumber \\
+  \sigma^2 &=& \left<(x-\mu)^2\right> = \int_{-\infty}^{\infty} (x - \mu)^2 P(x) dx \nonumber \\
+  &=& \int_{-\infty}^{\infty} (x^2 - 2\mu x + \mu^2) P(x) dx = \left<x^2\right> - \left<x\right>^2
+\end{eqnarray}
+\section{Sampling statistics}
+In experimental physics, we will often perform repeated measurements
+of a quantity that is expected to have the same true value, in order
+to obtain an estimate of the uncertainty in the quantity, and to
+reduce the uncertainty in that quantity by averaging several
+independent measurements. In any individual measurement, the observed
+value $x_{obs}$ will differ from the \emph{unknown} ``true'' value $x_t$
+by an unknown amount $d_x = x_{obs} - x_t$. We can think of $x_{obs}$
+as a random variable sampled from a probability distribution with mean
+$\mu = x_t$ and standard deviation $\sigma$ characterizing the typical
+error in a single measurement. Assuming
+that our measurements are \emph{unbiased}, the theoretical mean of the
+distribution of $x_{obs}$ is $\lim_{N \rightarrow \infty}
+\left<\frac{1}{N} \sum_{i=1}^N x_i \right> = \mu = x_t$. In other words, we assume that we are
+equally likely to err in either direction. Assume we have sampled the distribution of $x$ values by
+performing $N$ measurements $x_i$ for $i=1,\ldots,N$. We define the \emph{sample mean} $\bar{x}$ and the \emph{sample variance} $s^2$ as 
+\begin{eqnarray}
+  \bar{x} &=& \frac{1}{N} \sum_{i=1}^{N} x_i \label{samplemean} \\
+  s^2 &=& \frac{1}{N} \sum_{i=1}^{N} (x_i - \bar{x})^2 = \frac{1}{N} \sum_{i=1}^N x_i^2 -\frac{2}{N} \sum_{i=1}^{N} x_i \bar{x} + \frac{1}{N} \sum_{i=1}^N \bar{x}^2 \nonumber \\
+  s^2 &=& \overline{x^2} - \bar{x}^2 \label{samplevariance},
+\end{eqnarray}
+where on the last line we have used the fact that
+$\sum_{i=1}^N \bar{x}^2 =  N\bar{x}^2$ and
+$\frac{-2}{N}\sum_{i=1}^N x_i \bar{x} = -2\bar{x}^2$. It follows from
+the assumption of unbiased measurements that the expectation value of
+the sample mean is simply the ``true'' value $x_t = \mu$. Second, let us
+consider the variance of the sample mean. Since the expectation value
+of the mean (the ``average of the average'') is $\mu$, the variance of
+the sample mean is simply the average squared deviation of the mean of a sample of
+size $N$ from the ``true'' value $\mu$:
+\begin{eqnarray}
+  \sigma_{\bar{x}}^2 &=& \left<(\bar{x} - \mu)^2 \right>
+\end{eqnarray}
+Let $d_i = x_i - \mu$ be the ``true error'' in a single measurement,
+and let $D = \bar{x} - \mu$ be the ``true error'' in the sample mean. Then
+$d_i - D = x_i - \bar{x}$ by definition.
+
+The variance of the sample mean is evaluated by averaging $D^2$ over
+the distribution of $x$:
+\begin{eqnarray}
+  \sigma^2_{\bar{x}} &=& \left<D^2\right> \nonumber \\
+  &=& \left<\left(\frac{1}{N} \sum_{i=1}^N x_i - \mu\right)^2\right>
+  \nonumber \\
+  &=& \frac{1}{N^2}\left<\left(\sum_{i=1}^N x_i - N\mu \right)\left(\sum_{j=1}^N
+      x_j - N\mu \right)\right> \nonumber \\
+  &=& \frac{1}{N^2} \left<\left(\sum_{i=1}^N (x_i - \mu) \right)\left(\sum_{j=1}^N
+      (x_j - \mu) \right) \right>\nonumber \\
+  \sigma^2_{\bar{x}} &=& \frac{1}{N^2} \left<\sum_{i=1}^N d_i^2 +
+    \sum_{i=1}^N \sum_{j \ne i}^N d_i d_j \right>  = \frac{\sigma^2}{N} \label{varianceofsamplemean},
+\end{eqnarray}
+where on the last line, we have replaced $(x_i - \mu)$ with $d_i$. Consider what happens when we take the expectation value in
+Eq.~\eqref{varianceofsamplemean}. The expectation value of the ``true
+error'' $d_i$ is zero by the assumption of unbiased
+measurements. The second term inside the $\left<\ldots \right>$ in
+Eq.~\eqref{varianceofsamplemean} vanishes because each of the $N$
+measurements in each sample is assumed to be independent; i.e., the
+error $d_i$ is uncorrelated with the error $d_j$ for $i \ne
+j$. When we average this term over the distribution of a large number
+of $N$-samplings, we get zero. Therefore, we are left with the term $\frac{1}{N^2}
+\left<\sum_{i=1}^N d_i^2 \right>$. The expectation value
+$\left<\sum_{i=1}^N d_i^2\right>$ just gives $N \left<d^2\right> = N
+\sigma^2$, because each sample gives $N$ random $d^2$ values, and
+the average of $d^2$ over the distribution is just $\sigma^2$, by
+definition. We have thus arrived at the famous result that the
+variance of the sample mean equals the variance of the parent distribution
+divided by the number of measurements in the sample. Thus, if the
+standard deviation $\sigma$ of the distribution of $x$ serves as a
+measure of the error in a single measurement, then $\sigma_{\bar{x}}
+= \sigma/\sqrt{N}$ serves as a measure of the error in the average
+of $N$ independent measurements of the same quantity.
+
+Let us consider next the relationship between the sample variance and
+the distribution variance. The
+expectation value of the sample variance is given by
+\begin{eqnarray}
+  \left<s^2 \right> &=& \frac{1}{N} \left<\sum_{i=1}^N (x_i -
+    \bar{x})^2 \right> = \frac{1}{N} \left<\sum_{i=1}^N (d_i -D)^2
+  \right> \nonumber \\
+  &=& \frac{1}{N} \left<\sum_{i=1}^N \left( d_i^2 + D^2 - 2d_i D
+    \right)\right> \nonumber \\
+  &=& \sigma^2 + \frac{\sigma^2}{N} - \frac{2}{N} \left<\sum_{i=1}^N
+    (x_i-\mu)(\bar{x}-\mu)\right> = \sigma^2 + \frac{\sigma^2}{N} -
+  \frac{2}{N} \left<N (\bar{x}-\mu)^2 \right> \nonumber \\
+  &=& \sigma^2 + \frac{\sigma^2}{N} - \frac{2}{N}\left<N D^2 \right> =
+  \sigma^2 - \frac{\sigma^2}{N} = \sigma^2 \frac{N-1}{N} 
+\end{eqnarray}
+We see that the sample variance is a \emph{biased} estimator for the
+variance of the distribution, and tends to underestimate the variance
+at small values of $N$. As $N$ becomes large, however, the factor
+$(N-1)/N$ multiplying $\sigma^2$ tends toward one. Moreover, we see
+that $s^2 \frac{N}{N-1} = \frac{1}{N-1}\sum_{i=1}^N (x_i - \bar{x})^2$
+is an \emph{unbiased} estimator for $\sigma^2$.
+
+
+\end{document}
