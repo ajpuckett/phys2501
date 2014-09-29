@@ -114,6 +114,37 @@ at small values of $N$. As $N$ becomes large, however, the factor
 $(N-1)/N$ multiplying $\sigma^2$ tends toward one. Moreover, we see
 that $s^2 \frac{N}{N-1} = \frac{1}{N-1}\sum_{i=1}^N (x_i - \bar{x})^2$
 is an \emph{unbiased} estimator for $\sigma^2$.
+\section{Special Probability Distributions: Binomial, Poisson and
+  Gaussian}
+\subsection{Binomial}
+The binomial distribution describes the probability distribution of outcomes of
+binary (success/failure) experiments. Specifically, the probability
+$P(k)$ of observing $k$ ``successes'' in $N$ independent trials when the
+probability of success is $p$ is given by:
+\begin{eqnarray}
+  P(k) &=& \frac{N!}{k!\left(N-k\right)!} p^k (1-p)^{N-k} \label{binomialdist}
+\end{eqnarray}
+The various factors appearing in Eq.~\eqref{binomialdist} are
+intuitively simple to understand. The factor $p^k$ represents the product of the
+individual probabilities of each of the $k$ successes. The factor
+$(1-p)^{N-k}$ represents the product of the individual probabilities
+for each of the $N-k$ failures. However, we don't care about the order
+in which the successes and failures occur, so we have to multiply this
+probability by the number of possible ways of choosing $k$ successes
+from $N$ trials. It is a well-known fact that the number of possible
+orderings of $N$ trials, regardless of success or failure, is
+$N!$. Let $M$ be the number of possible orderings of $k$ successes
+drawn from among $N$ trials. There are $N$ ways to choose the first
+(successful) trial. For each possible choice of the first trial, there
+are $N-1$ ways to choose the second trial, and so on all the way up to $N - k + 1$ ways to choose
+the $k^{th}$ trial: 
+\begin{eqnarray}
+  M &=& N (N-1) (N-2) \ldots (N-k + 1) = N (N-1) (N-2) \ldots (N-k +
+  1) \times \frac{(N-k)!}{(N-k)!} = \frac{N!}{(N-k)!}
+\end{eqnarray}
+Recalling that we don't care about the ordering of the $k$ successes,
+the number of ways of choosing $k$ successes from $N$ trials is simply
+given by $M/k! = \frac{N!}{k!(N-k)!}$.
 
 
 \end{document}
