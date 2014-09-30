@@ -146,5 +146,12 @@ Recalling that we don't care about the ordering of the $k$ successes,
 the number of ways of choosing $k$ successes from $N$ trials is simply
 given by $M/k! = \frac{N!}{k!(N-k)!}$.
 
+The mean of the binomial distribution is given by 
+\begin{eqnarray}
+  <k> &=& \sum_{k=0}^N k P(k) \nonumber \\
+  &=& \sum_{k=0}^N k \frac{N!}{k! (N-k)!} p^k (1-p)^{N-k} \nonumber \\
+  &=& \sum_{k=0}^N (N-k+1) \frac{p}{1-p} \frac{N!}{(k-1)! (N-k+1)!} p^{k-1}(1-p)^{N-k+1} \nonumber \\
+  &=& \frac{p}{1-p} \sum_{k=0}^N (N-k+1) P(k-1) = \frac{p}{1-p} \left[
+\end{eqnarray}
 
 \end{document}
