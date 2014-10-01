@@ -25,7 +25,7 @@ We define the mean $\mu$ and the variance $\sigma^2$ of $x$ as
 \end{eqnarray}
 \section{Sampling statistics}
 In experimental physics, we will often perform repeated measurements
-of a quantity that is expected to have the same true value, in order
+of a quantity that is expected to have the same true value in each measurement, in order
 to obtain an estimate of the uncertainty in the quantity, and to
 reduce the uncertainty in that quantity by averaging several
 independent measurements. In any individual measurement, the observed
@@ -163,7 +163,7 @@ probable value of $k$ is $Np$, and that the fractional deviations of
 $k$ from $Np$ decrease as $N$ increases. A more quantitative statement
 of this observation will be made below. The binomial distribution can be shown to be normalized (i.e., that
 $\sum_{k=0}^N P(k) = 1$) by simply recognizing the fact that this sum
-is equivalent the binomial expansion of $((1-p)+p)^N = 1$. Indeed,
+is equivalent to the binomial expansion of $((1-p)+p)^N = 1$. Indeed,
 this is where the name ``Binomial'' distribution comes from. The mean of the binomial distribution is given by $\left<k\right> =
 Np$. This can be shown by carrying out the sum of $k P(k)$ over all
 $k$ from 0 to N:
@@ -224,7 +224,7 @@ $\lambda = RT$ is finite. Consider Eq.~\eqref{binomialdist} in the
 limit of large $N$ and small $p$, with $Np = \lambda = $ constant. 
 \begin{eqnarray}
   \lim_{N \rightarrow \infty, p \rightarrow 0, Np \rightarrow \lambda}
-  \frac{N!}{k!(N-k)!} p^k (1-p)^{N-k} &=& 
+  \frac{N!}{k!(N-k)!} p^k (1-p)^{N-k} &=& \lim_{N \rightarrow \infty, p \rightarrow 0, Np \rightarrow \lambda} \frac{N(N-1)(N-2)\ldots (N-k+1)(N-k)!}{k!(N-k)!}p^k(1-p)^{N-k} 
 \end{eqnarray}
 \subsection{Gaussian}
 \section{The Central Limit Theorem}
