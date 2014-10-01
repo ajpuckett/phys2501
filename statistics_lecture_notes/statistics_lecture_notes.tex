@@ -1,6 +1,7 @@
 \documentclass{revtex4}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \begin{document}
 \title{Lecture notes on probability and statistics relevant to experiments in PHYS 2501W}
 \author{Prof. Andrew Puckett}
@@ -108,7 +109,7 @@ expectation value of the sample variance is given by
   &=& \sigma^2 + \frac{\sigma^2}{N} - \frac{2}{N}\left<N D^2 \right> =
   \sigma^2 - \frac{\sigma^2}{N} = \sigma^2 \frac{N-1}{N} 
 \end{eqnarray}
-We see that the sample variance is a \emph{biased} estimator for the
+We therefore see that the sample variance is a \emph{biased} estimator for the
 variance of the distribution, and tends to underestimate the variance
 at small values of $N$. As $N$ becomes large, however, the factor
 $(N-1)/N$ multiplying $\sigma^2$ tends toward one. Moreover, we see
@@ -146,12 +147,88 @@ Recalling that we don't care about the ordering of the $k$ successes,
 the number of ways of choosing $k$ successes from $N$ trials is simply
 given by $M/k! = \frac{N!}{k!(N-k)!}$.
 
-The mean of the binomial distribution is given by 
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{Binomial_vs_N_p50.pdf}
+    \includegraphics[width=0.48\textwidth]{Binomial_vs_p_N500.pdf}
+  \end{center}
+  \caption{\label{fig:binomial} Left: Binomial distribution at
+    different values of $N$ for a fixed $p=0.5$. Right: Binomial
+    distribution at different values of $p$ for a fixed $N = 500$.}
+\end{figure}
+Figure \ref{fig:binomial} shows the behavior of the binomial
+distribution $P(k)$ as a function of $N$ for fixed $p$, and as a
+function of $p$ for fixed $N$. We see that the average and most
+probable value of $k$ is $Np$, and that the fractional deviations of
+$k$ from $Np$ decrease as $N$ increases. A more quantitative statement
+of this observation will be made below. The binomial distribution can be shown to be normalized (i.e., that
+$\sum_{k=0}^N P(k) = 1$) by simply recognizing the fact that this sum
+is equivalent the binomial expansion of $((1-p)+p)^N = 1$. Indeed,
+this is where the name ``Binomial'' distribution comes from. The mean of the binomial distribution is given by $\left<k\right> =
+Np$. This can be shown by carrying out the sum of $k P(k)$ over all
+$k$ from 0 to N:
 \begin{eqnarray}
-  <k> &=& \sum_{k=0}^N k P(k) \nonumber \\
+  \left<k\right> &=& \sum_{k=0}^N k P(k) \nonumber \\
   &=& \sum_{k=0}^N k \frac{N!}{k! (N-k)!} p^k (1-p)^{N-k} \nonumber \\
-  &=& \sum_{k=0}^N (N-k+1) \frac{p}{1-p} \frac{N!}{(k-1)! (N-k+1)!} p^{k-1}(1-p)^{N-k+1} \nonumber \\
-  &=& \frac{p}{1-p} \sum_{k=0}^N (N-k+1) P(k-1) = \frac{p}{1-p} \left[
+  &=& \frac{p}{1-p} \sum_{k=1}^N \frac{N!(N-k+1)}{(k-1)! (N-k+1)!} p^{k-1}(1-p)^{N-k+1} \nonumber \\
+  &=& \frac{p}{1-p} \sum_{k=0}^{N-1} (N-k) P(k) = \frac{p}{1-p}
+  \left[N\sum_{k=0}^{N-1} P(k) - \sum_{k=0}^{N-1} k P(k)\right]
+  \nonumber \\
+  \left<k\right> &=& \frac{p}{1-p}\left[N(1-p^N) - \left<k\right> + N p^N \right] =
+  \frac{p}{1-p}(N-\left<k\right>) \nonumber \\
+  \left(1-p+p\right)\left<k\right> = \left<k\right> &=& Np \label{binomial_mean}
 \end{eqnarray}
+The variance of the binomial distribution is given by $\sigma_k^2 =
+Np(1-p)$, as is shown by computing the sum of $(k-Np)^2 P(k)$ over all $k$:
+\begin{eqnarray}
+  \sigma_k^2 + (Np)^2 &=& \sum_{k=0}^N k^2 P(k) \nonumber \\
+  &=& \sum_{k=1}^N k \frac{N!}{(k-1)! (N-k)!} p^k(1-p)^{N-k} \nonumber
+  \\
+  &=& \frac{p}{1-p}\sum_{k=1}^N k\frac{N! (N-k+1)}{(k-1)!(N-k+1)!}
+  p^{k-1}(1-p)^{N-k+1} \nonumber \\
+  &=& \frac{p}{1-p} \sum_{k=1}^N k (N-k+1) P(k-1) =
+  \frac{p}{1-p}\sum_{k=0}^{N-1} (k+1)(N-k) P(k) \nonumber \\
+  &=& \frac{p}{1-p} \left[N \sum_{k=0}^{N-1} kP(k) + N
+    \sum_{k=0}^{N-1} P(k) - \sum_{k=0}^{N-1} k^2 P(k) -
+    \sum_{k=0}^{N-1} k P(k) \right] \nonumber \\
+  &=& \frac{p}{1-p} \left[N( Np - Np^N) + N - Np^N - \left<k^2\right>
+    + N^2 p^N - Np + Np^N \right] \nonumber \\
+  &=& \frac{p}{1-p}\left[N^2 p  + N - \left<k^2\right> - Np  \right] =
+  \frac{p}{1-p}\left[N(Np + 1 - p) - \left<k^2\right> \right]
+  \nonumber \\
+  \left<k^2\right> &=& Np(Np + 1 - p) = (Np)^2 + Np(1-p) \nonumber \\
+  \Rightarrow \sigma_k^2 &=& Np(1-p)
+\end{eqnarray}
+The standard deviation $\sigma_k$ of $k$ is then given by 
+\begin{eqnarray}
+  \frac{\sigma_k}{\left<k\right>} &=& \frac{\sqrt{Np(1-p)}}{Np} = \sqrt{\frac{1-p}{Np}}
+\end{eqnarray} 
+Therefore we see that at fixed $p$, the fractional spread of $k$ about
+the mean $Np$ decreases as $1/\sqrt{N}$ as $N$ becomes large.
+\subsection{Poisson}
+The Poisson distribution emerges from consideration of the Binomial
+distribution in the limit as $N \rightarrow \infty$ and $p \rightarrow
+0$ while the product $Np = \lambda$ remains finite, approaching a
+constant value $\lambda$. A good example of a physical system governed
+by Poisson statistics is a sample of low-level, long-lived radioactive
+material such as $^{238}$U. The lifetime of $^{238}$U is long enough
+that the number of nuclei present does not change by a measurable
+amount over any reasonable time interval we can observe in the
+lab. Therefore, the counting rate $R = dN/dt$, the number of decays
+observed per unit time, is constant to a very good approximation.  When we observe the activity level of such
+a source using a Geiger counter to count the number of decays in a
+time interval $T$, the probability of any individual nucleus decaying
+is very small (close to zero), whereas the number of unstable nuclei
+in the sample is large, such that the expected average number of counts
+$\lambda = RT$ is finite. Consider Eq.~\eqref{binomialdist} in the
+limit of large $N$ and small $p$, with $Np = \lambda = $ constant. 
+\begin{eqnarray}
+  \lim_{N \rightarrow \infty, p \rightarrow 0, Np \rightarrow \lambda}
+  \frac{N!}{k!(N-k)!} p^k (1-p)^{N-k} &=& 
+\end{eqnarray}
+\subsection{Gaussian}
+\section{The Central Limit Theorem}
+\section{The $\chi^2$ distribution, the Least-Squares method, and the
+  meaning of $\chi^2$ as a test of goodness-of-fit}
 
 \end{document}
