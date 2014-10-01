@@ -223,8 +223,20 @@ in the sample is large, such that the expected average number of counts
 $\lambda = RT$ is finite. Consider Eq.~\eqref{binomialdist} in the
 limit of large $N$ and small $p$, with $Np = \lambda = $ constant. 
 \begin{eqnarray}
-  \lim_{N \rightarrow \infty, p \rightarrow 0, Np \rightarrow \lambda}
-  \frac{N!}{k!(N-k)!} p^k (1-p)^{N-k} &=& \lim_{N \rightarrow \infty, p \rightarrow 0, Np \rightarrow \lambda} \frac{N(N-1)(N-2)\ldots (N-k+1)(N-k)!}{k!(N-k)!}p^k(1-p)^{N-k} 
+  \lim_{N \rightarrow \infty, Np \rightarrow \lambda}
+  \frac{N!}{k!(N-k)!} p^k (1-p)^{N-k} &=& \lim_{N \rightarrow
+    \infty,Np \rightarrow \lambda} \frac{N(N-1)(N-2)\ldots
+    (N-k+1)(N-k)!}{k!(N-k)!}p^k(1-p)^{N-k} \nonumber \\
+  &=& \frac{(Np)^k}{k!} \lim_{N\rightarrow \infty, Np \rightarrow \lambda} (1-p)^{N-k} =
+  \frac{\lambda^k}{k!} \lim_{N\rightarrow \infty, Np\rightarrow \lambda} (1-p)^N \nonumber \\
+ \ln \left((1-p)^N\right) = N \ln (1-p) &\xrightarrow[p \rightarrow 0]{}& -Np = -\lambda \nonumber \\
+ \Rightarrow \lim_{N\rightarrow \infty,Np\rightarrow \lambda} P(k) &=&
+ \frac{\lambda^k e^{-\lambda}}{k!} \label{PoissonDist}
+\end{eqnarray}
+The discrete probability distribution represented by
+Eq.~\eqref{PoissonDist} is known as the Poisson distribution. The mean
+and variance of the Poisson distribution can be computed as follows:
+\begin{eqnarray}
 \end{eqnarray}
 \subsection{Gaussian}
 \section{The Central Limit Theorem}
