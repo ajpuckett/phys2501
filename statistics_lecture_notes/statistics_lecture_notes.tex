@@ -234,10 +234,166 @@ limit of large $N$ and small $p$, with $Np = \lambda = $ constant.
  \frac{\lambda^k e^{-\lambda}}{k!} \label{PoissonDist}
 \end{eqnarray}
 The discrete probability distribution represented by
-Eq.~\eqref{PoissonDist} is known as the Poisson distribution. The mean
+Eq.~\eqref{PoissonDist} is known as the Poisson distribution. It is
+easy to show that the Poisson distribution is normalized by noting
+that $\sum_{n=0}^\infty P(n) = \sum_{n=0}^\infty \frac{\lambda^n
+  e^{-\lambda}}{n!} = e^{-\lambda} \sum_{n=0}^\infty
+\frac{\lambda^n}{n!} = e^{-\lambda}e^\lambda = 1$. The mean
 and variance of the Poisson distribution can be computed as follows:
 \begin{eqnarray}
+  \left<n\right> &=& \sum_{n=0}^\infty n P(n) = \sum_{n=0}^\infty n
+  \frac{\lambda^n e^{-\lambda}}{n!}  \nonumber \\
+  &=& \sum_{n=1}^\infty \frac{\lambda^n e^{-\lambda}}{(n-1)!} =
+  \lambda \sum_{m=0}^\infty \frac{\lambda^m e^{-\lambda}}{m!} = \lambda
 \end{eqnarray}
+The result for the mean is obvious since $\lambda$ was defined from
+the beginning as the average value of $n$. The variance $\sigma_n^2 =
+\left<\left(n-\left<n\right>\right)^2\right>$ is given by:
+\begin{eqnarray}
+  \sigma_n^2 + \lambda^2 &=& \sum_{n=0}^\infty n^2 P(n)  \nonumber \\
+  &=& \sum_{n=1}^\infty n \frac{\lambda^n e^{-\lambda}}{(n-1)!}
+  \nonumber \\
+  &=& \lambda \sum_{m=0}^\infty (m+1) \frac{\lambda^m
+    e^{-\lambda}}{m!} \nonumber \\
+  &=& \lambda (\lambda + 1) \nonumber \\
+  \Rightarrow \sigma_n^2 &=& \lambda(\lambda+1) - \lambda^2 = \lambda
+\end{eqnarray}
+Thus we have arrived at the well-known result that both the mean and the
+variance of the Poisson distribution are equal to $\lambda$, and
+therefore the standard deviation of the Poisson distribution divided
+by the mean value is $\sigma_n/\left<n\right> = 1/\sqrt{\lambda}$. Now
+let us consider the Poisson distribution in the limit of large
+$\lambda$. We start by taking the logarithm of $P(n)$:
+\begin{eqnarray}
+  \ln{P(n)} &=& n \ln \lambda - \lambda - \ln n! \label{logPn}
+\end{eqnarray}
+Let $x = (n - \lambda)/\lambda$, so that $n = \lambda(1 + x)$. In the
+limit of large $\lambda$, the standard deviation of $n$ vanishes as
+$1/\sqrt{\lambda}$, so that in this limit, $x$ can be considered
+small. Replacing $n$ with $\lambda(1+x)$, equation~\eqref{logPn} becomes:
+\begin{eqnarray}
+  \ln P(n) &=& \lambda(1+x) \ln \lambda - \lambda - \ln\left(
+    (\lambda(1+x))! \right)
+\end{eqnarray}
+Consider the last term with the factorial on the right-hand-side. The
+factorial of $n$ can be written in integral form as 
+\begin{eqnarray}
+  n! &=& \int_0^\infty x^n e^{-x} dx \label{nfactintegral}
+\end{eqnarray}
+To see why this is the case, carry out the integral on the
+right-hand-side using integration by parts. Let $u = x^n$ and $dv =
+e^{-x} dx$. Then $v = -e^{-x}$ and $du = nx^{n-1}$, and the integral can
+be rewritten as: 
+\begin{eqnarray}
+  n! &=& \left. -x^n e^{-x}\right|_0^\infty + n \int_0^\infty x^{n-1}
+  e^{-x} dx
+\end{eqnarray}
+The first term vanishes because it gives zero at $x=0$ and $x=\infty$, while the second term gives $n(n-1)! = n!$
+(assuming validity of Eq.~\eqref{nfactintegral}). We can prove that
+Eq.~\eqref{nfactintegral} is valid for integer $n$ by carrying out
+integration by parts all the way down to $n=1$:
+\begin{eqnarray}
+  \int_0^\infty x^n e^{-x} &=& n \int_0^\infty x^{n-1}e^{-x} dx =
+  n(n-1) \int_0^\infty x^{n-2}e^{-x}dx \nonumber \\
+  &=& n(n-1)(n-2)\ldots(2)(1) \int_0^\infty e^{-x} dx = n!
+\end{eqnarray}
+Using the integral form of $n!$, we can derive an approximation known
+as Stirling's approximation for $\ln n!$ in the limit of large
+$n$. Consider the logarithm of the integrand of
+Eq.~\eqref{nfactintegral}:
+\begin{eqnarray}
+  \ln \left(x^n e^{-x} \right) &=& n \ln x - x
+\end{eqnarray}
+In the limit of large $n$, the integrand is strongly peaked around $x
+= n$ (this is also true of the Poisson distribution). Let $x = n(1+
+\delta)$, where $\delta$ will be taken to be small later on.
+\begin{eqnarray}
+  \ln \left(x^n e^{-x} \right) &=& n \ln (n(1+\delta)) - n(1+\delta)
+  \nonumber \\
+  &=& n \ln n + n \ln (1+\delta) - n(1+\delta) \nonumber \\
+  &\approx& n \ln n + n\left(\delta - \frac{\delta^2}{2} +
+    \mathcal{O}\left(\delta^3\right)\right) -n(1+\delta) \nonumber \\
+  \ln \left(x^n e^{-x} \right) &\approx & n \ln n - n - n
+  \frac{\delta^2}{2} \label{eq23}
+\end{eqnarray}
+Exponentiating both sides of Eq.~\eqref{eq23}, we find:
+\begin{eqnarray}
+  x^n e^{-x} &\approx& n^ne^{-n} e^{-n\frac{\delta^2}{2}}
+\end{eqnarray} 
+so that the integral equation for $n!$ can be rewritten as
+\begin{eqnarray}
+  n! &\approx & n^ne^{-n} \int_{-1}^{\infty}
+  \frac{e^{-n\frac{\delta^2}{2}}}{n} d\delta = n^n e^{-n}
+  \int_{-n}^\infty e^{-\frac{y^2}{2n}} dy \approx n^n e^{-n}
+  \int_{-\infty}^{\infty} e^{-\frac{y^2}{2n}} dy, \label{nfactapprox}
+\end{eqnarray}
+where in the last step, we have extended the lower limit of the
+integral to $-\infty$, reflecting the large-$n$ approximation. The
+integral of $e^{-\frac{y^2}{2n}} dy$ can be carried out by squaring
+the integral and then switching to polar coordinates:
+\begin{eqnarray}
+  \left( \int_{-\infty}^\infty e^{-\frac{y^2}{2n}} dy\right)^2 &=& \left(
+    \int_{-\infty}^\infty e^{-\frac{y^2}{2n}} dy \right)\left( \int_{-\infty}^\infty
+    e^{-\frac{x^2}{2n}} dx \right) \nonumber \\
+  &=& \int_0^{2\pi} \left[\int_0^\infty r e^{-\frac{r^2}{2n}} dr
+  \right] d\phi \nonumber \\
+  &=& 2\pi n \int_0^\infty e^{-u} du = 2\pi n \nonumber \\
+  \int_{-\infty}^{\infty} e^{-\frac{y^2}{2n}} dy &=& \sqrt{2\pi n}
+\end{eqnarray} 
+Substituting this expression back into the
+expression~\eqref{nfactapprox} for $n!$, we finally find
+\begin{eqnarray}
+  n! &\approx& n^n e^{-n} \sqrt{2\pi n} \\
+  \ln (n!) &\approx & n \ln n - n + \frac{1}{2} \ln (2\pi n) \label{Stirling}
+\end{eqnarray}
+Equation~\eqref{Stirling} is known as Stirling's
+approximation. Sometimes only the first two terms are retained, as the
+third term is small compared to the first two in the large $n$
+limit. To analyze the limiting behavior of the Poisson distribution,
+however, we keep this term. Substituting Stirling's approximation for
+$\ln n!$ back into the expression~\eqref{logPn} for $\ln(P(n))$, and
+letting $n = \lambda(1+x)$, we
+find 
+\begin{eqnarray}
+  \ln P(n) &=& n \ln \lambda - \lambda - \left[n \ln n - n +
+    \frac{1}{2}\ln(2\pi n) \right] \nonumber \\
+  &=& \lambda(1+x) \ln \lambda - \lambda -
+  \left[\lambda(1+x)\ln(\lambda(1+x)) - \lambda(1+x) + \frac{1}{2} \ln(2\pi\lambda(1+x))\right],
+\end{eqnarray}
+which simplifies to 
+\begin{eqnarray}
+  \ln P(n) &\approx& \lambda(1+x)\ln \lambda - \lambda - \lambda(1+x)(\ln \lambda +
+  \ln(1+x)) + \lambda(1+x) - \frac{1}{2} \ln(2\pi \lambda(1+x))
+  \nonumber \\
+  &=& -\lambda(1+x)\ln(1+x) + \lambda x - \frac{1}{2} \ln (2\pi
+  \lambda(1+x)) \nonumber \\
+  &\approx& -\lambda(1+x)\left(x - \frac{x^2}{2} +
+    \mathcal{O}(x^3)\right) + \lambda x - \frac{1}{2} \ln (2\pi
+  \lambda(1+x)) \nonumber \\
+  &\approx& -\lambda \left(x + x^2 - \frac{x^2}{2} +
+    \mathcal{O}(x^3)\right) + \lambda x - \frac{1}{2} \ln(2\pi
+  \lambda(1+x)) \nonumber \\
+  &\approx & -\lambda \frac{x^2}{2} -\frac{1}{2} \ln(2\pi \lambda),
+\end{eqnarray}
+where on the last line, we have replaced $1+x \rightarrow 1$ in the
+argument of the logarithm in the second term. This is justified
+because the $x$-dependence of the second term vanishes in the
+large-$\lambda$ limit.
+  
+Exponentiating this expression leads to a large-$\lambda$
+approximation for $P(n)$:
+\begin{eqnarray}
+  P\left(x = \frac{n-\lambda}{\lambda}\right) &=& \frac{e^{-\frac{\lambda
+        x^2}{2}}}{\sqrt{2\pi \lambda}}.
+\end{eqnarray}
+If we define $y = \lambda x = n - \lambda$, then the large-$\lambda$ limit
+of $P(y)$ is 
+\begin{eqnarray}
+  P(y = n - \lambda) &=& \frac{e^{-\frac{y^2}{2\lambda}}}{\sqrt{2\pi \lambda}}
+\end{eqnarray}
+Thus, in the limit of large $\lambda$, the Poisson distribution
+approaches a Gaussian or normal distribution with mean $\lambda$
+and standard deviation $\sqrt{\lambda}$.
 \subsection{Gaussian}
 \section{The Central Limit Theorem}
 \section{The $\chi^2$ distribution, the Least-Squares method, and the
