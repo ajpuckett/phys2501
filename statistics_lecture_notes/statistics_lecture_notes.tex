@@ -393,8 +393,83 @@ of $P(y)$ is
 \end{eqnarray}
 Thus, in the limit of large $\lambda$, the Poisson distribution
 approaches a Gaussian or normal distribution with mean $\lambda$
-and standard deviation $\sqrt{\lambda}$.
-\subsection{Gaussian}
+and standard deviation $\sqrt{\lambda}$. This brings us to the
+discussion of one of the most important distributions in statistics
+and experimental physics, the Gaussian or normal distribution.
+\subsection{Gaussian (Normal) Distribution}
+The Gaussian distribution with mean $\mu$ and standard deviation
+$\sigma$ for a continuous random variable $x$ is defined as
+\begin{eqnarray}
+  P(x) &=& \frac{1}{\sqrt{2\pi \sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\end{eqnarray}
+It is normalized so that its integral over all $x$ gives one:
+\begin{eqnarray}
+  \int_{-\infty}^\infty P(x) dx &=& \frac{1}{\sqrt{2\pi \sigma^2}}
+  \int_{-\infty}^\infty e^{-\frac{(x-\mu)^2}{2\sigma^2}} dx =
+  \frac{\sqrt{2\pi \sigma^2}}{\sqrt{2\pi\sigma^2}} = 1
+\end{eqnarray}
+It can be shown that the expectation value for the normal distribution
+is $\mu$ as follows:
+\begin{eqnarray}
+  \left<x\right> &=& \frac{1}{\sqrt{2\pi\sigma^2}}
+  \int_{-\infty}^{\infty} x e^{-\frac{(x-\mu)^2}{2\sigma^2}} dx
+\end{eqnarray}
+Let $y = \frac{x-\mu}{\sigma}$. Then $dy = dx/\sigma$ and the
+exponential becomes $e^{-\frac{y^2}{2}}$. $x dx$ becomes $(\sigma y +
+\mu) \sigma dy$, so that the integral becomes
+\begin{eqnarray}
+  \left<x\right> &=& \frac{1}{\sqrt{2\pi \sigma^2}}
+  \int_{-\infty}^\infty \left(\sigma^2 y + \sigma \mu\right)
+    e^{-\frac{y^2}{2}} dy \label{Gaussmean} \\
+    &=& \frac{1}{\sqrt{2\pi \sigma^2}} \mu \sigma
+    \int_{-\infty}^\infty e^{-\frac{y^2}{2}} dy = \mu
+\end{eqnarray}
+The first term in Eq.~\eqref{Gaussmean} vanishes because
+$ye^{-\frac{y^2}{2}}$ is an odd function, integrated over the entire
+real axis. The integral of the second term just gives $\sigma \mu
+\sqrt{2\pi}$, which cancels the normalization constant in the
+denominator and leaves us with $\mu$. We can similarly show that the
+variance of the normal distribution is $\sigma^2$:
+\begin{eqnarray}
+  \left<(x-\mu)^2\right> &=& \frac{1}{\sqrt{2\pi \sigma^2}}
+  \int_{-\infty}^\infty (x-\mu)^2 e^{-\frac{(x-\mu)^2}{2\sigma^2}} dx
+\end{eqnarray}
+Again, we make the simplifying substitution $y = \frac{x-\mu}{\sigma}$:
+\begin{eqnarray}
+  \left<(x-\mu)^2\right> &=& \frac{\sigma^2}{\sqrt{2\pi}}
+  \int_{-\infty}^\infty y^2 e^{-\frac{y^2}{2}} dy
+\end{eqnarray}
+The integral can be carried out using integration by parts. Let $u =
+y$ and $dv = ye^{-\frac{y^2}{2}} dy$. Then $uv = -ye^{-\frac{y^2}{2}}$
+and $-v du =e^{-\frac{y^2}{2}} dy$:
+\begin{eqnarray}
+  \left<(x-\mu)^2\right> &=& \frac{\sigma^2}{\sqrt{2\pi}}
+  \left[\left.-ye^{-\frac{y^2}{2}}\right|_{-\infty}^{\infty} +
+    \sqrt{2\pi} \right] = \sigma^2
+\end{eqnarray}
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=.98\textwidth]{Gaussian.pdf}
+  \end{center}
+  \caption{\label{fig:Gauss} Normal distribution with mean $\mu = 0$ and
+    standard deviation $\sigma = 1$. Left: Gaussian distribution $P(x)$. Right: The
+    cumulative distribution function $C(x) = \int_{-\infty}^x P(x') dx'$
+    representing the cumulative probability that a randomly sampled
+    observation $x'$ will give a result $x' \le x$.}
+\end{figure}
+Figure~\ref{fig:Gauss} shows the behavior of the Gaussian distribution
+$P(x)$ with mean $\mu = 0$ and standard deviation $\sigma = 1$, as
+well as its cumulative distribution function. According to the Central Limit
+Theorem presented in the next section, if $(x_i; i=1,\ldots,N)$ are
+independent random variables sampled from \emph{any} distribution with finite mean $\mu$ and finite
+variance $\sigma^2$, then in the limit as $N \rightarrow \infty$, the
+variable $\bar{x} = \frac{1}{N} \sum_{i=1}^N x_i$ is normally
+distributed with mean $\mu$ and variance $\sigma_{\bar{x}}^2 =
+\sigma^2/N$. Therefore, if we perform a large number of repeated
+measurements of the same quantity that is subject to random
+measurement errors characterized by a standard deviation $\sigma$, the
+Central Limit Theorem helps us to relate $\sigma$ to a 
+
 \section{The Central Limit Theorem}
 \section{The $\chi^2$ distribution, the Least-Squares method, and the
   meaning of $\chi^2$ as a test of goodness-of-fit}
