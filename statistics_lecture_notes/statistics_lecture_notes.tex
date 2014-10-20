@@ -481,7 +481,52 @@ variable $\bar{x} = \frac{1}{N} \sum_{i=1}^N x_i$ is normally
 distributed with mean $\mu$ and variance $\sigma_{\bar{x}}^2 =
 \sigma^2/N$. 
 
+The Gaussian distribution has several other interesting and useful
+properties. For example, the Fourier transform of a Gaussian is also a
+Gaussian:
+\begin{eqnarray}
+  \tilde P(\omega) &=& \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{i \omega
+    x} P(x) dx \nonumber \\
+  &=& \frac{1}{2\pi}\int_{-\infty}^\infty
+  e^{\left[i\omega x - \frac{(x-\mu)^2}{2\sigma^2}\right]} dx   \nonumber \\
+  &=& \frac{1}{2\pi}\int_{-\infty}^\infty
+  e^{-\frac{-2i\sigma^2 \omega x + x^2 + \mu^2 - 2\mu x
+      }{2\sigma^2}} dx
+\end{eqnarray}
+Now we ``complete the square'' in the argument of the exponential by
+letting $a = i\sigma^2 \omega + \mu$ and adding and subtracting $a^2$
+from the numerator:
+\begin{eqnarray}
+  \tilde{P}(\omega) &=& \frac{1}{2\pi}
+  \int_{-\infty}^\infty e^{-\frac{1}{2\sigma^2}\left[x^2 -2ax +
+      \mu^2\right]} dx \nonumber \\
+  &=& \frac{1}{2\pi}
+  \int_{-\infty}^\infty e^{-\frac{1}{2\sigma^2} \left[(x-a)^2 + \mu^2
+      - a^2 \right]} dx \nonumber \\
+  &=& \frac{1}{2\pi}
+  e^{-\frac{\mu^2 - a^2}{2\sigma^2}} \int_{-\infty}^\infty
+  e^{-\frac{(x-a)^2}{2\sigma^2}} dx \nonumber \\
+  &=& \frac{\sigma}{\sqrt{2\pi}} e^{-\frac{\mu^2 - a^2}{2\sigma^2}} = \frac{\sigma}{\sqrt{2\pi}}
+  e^{-\frac{\mu^2-(\mu^2 - \sigma^4 \omega^2 + 2i\sigma^2
+      \omega \mu)}{2\sigma^2}} \nonumber \\
+ \tilde{P}(\omega) &=& \frac{\sigma}{\sqrt{2\pi}} e^{-\frac{\sigma^2 \omega^2}{2}}e^{ i
+   \omega \mu} \nonumber \\
+ \left|\tilde{P}(\omega) \right| &=&
+ \frac{e^{-\frac{\omega^2}{2\sigma_\omega^2}}}{\sqrt{2\pi
+     \sigma^2_\omega}}, \sigma_\omega = \frac{1}{\sigma}
+ \nonumber 
+\end{eqnarray}
+We see that the Fourier transform of a Gaussian with a mean $\mu=0$
+and standard deviation $\sigma$ is also a Gaussian with a mean of zero
+and a standard deviation $\sigma_\omega = \sigma^{-1}$.
 \section{The Central Limit Theorem}
+Perhaps the simplest version of the Central Limit Theorem states that
+if $\bar{x} = \frac{1}{N}\sum_{i=1}^N x_i$ is the mean of $N$
+independent random samplings of a distribution with finite mean $\mu$
+and variance $\sigma^2$, then as $N \rightarrow \infty$, $\bar{x}$ is
+normally distributed with mean $\mu$ and variance $\sigma^2/N$. This
+version of the central limit theorem can be proven by considering the
+distribution of the 
 \section{The $\chi^2$ distribution, the Least-Squares method, and the
   meaning of $\chi^2$ as a test of goodness-of-fit}
 
