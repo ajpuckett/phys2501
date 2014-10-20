@@ -425,9 +425,9 @@ to obtain the intersection indicated in Fig.~\ref{eq:xcheck1}. Excel Solver
 would be a good tool to use for this purpose.  The error on
 this value is given by
 \begin{equation}
-\Delta a = \sqrt{\frac{\left(\frac{a}{2}\sinh{\frac{aW}{2}}\right)^2
-(\Delta W)^2 + a^2(\Delta H)^2}
-{\left| H-\frac{W}{2}\sinh{\frac{aW}{2}}\right|}}
+\Delta a = \frac{\sqrt{\left(\frac{a}{2}\sinh{\frac{aW}{2}}\right)^2
+(\Delta W)^2 + a^2(\Delta H)^2}}
+{\left| H-\frac{W}{2}\sinh{\frac{aW}{2}}\right|}
 \label{eq:xcheck1err}
 \end{equation}
 in terms of the measurement uncertainties $\Delta W$ and $\Delta H$.
@@ -451,8 +451,8 @@ As before, use a graphical method to solve for the wanted solution
 of $a$, excluding the unwanted solution $a=0$. The error $\Delta a$
 that follows from Eq.~\ref{eq:xcheck2} is
 \begin{equation}
-\Delta a = \sqrt{\frac{\left(a\cosh{\frac{aW}{2}}\right)^2
-(\Delta W)^2 +a^2(\Delta L)^2}{\left| L-W\cosh{\frac{aW}{2}}\right|}}
+\Delta a = \frac{\sqrt{\left(a\cosh{\frac{aW}{2}}\right)^2
+(\Delta W)^2 +a^2(\Delta L)^2}}{\left| L-W\cosh{\frac{aW}{2}}\right|}
 \label{eq:xcheck2err}
 \end{equation}
 Verify that the value of $a$ obtained using the $W$,$L$ method agrees
