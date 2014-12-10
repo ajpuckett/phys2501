@@ -81,7 +81,7 @@
 % insert suggested keywords - APS authors don't need to do this
 %\keywords{}
 
-%\setlength{\topmargin}{0in}
+\setlength{\topmargin}{0in}
 
 %\maketitle must follow title, authors, abstract, \pacs, and \keywords
 \maketitle
@@ -324,15 +324,11 @@ probability that it will be detected at an excited level with an energy
 $\Delta E$ above the ground state is given by the so-called {\em
 Boltzmann factor}
 \begin{equation}
-{\cal P} \propto e^{-\frac{\Delta E}{nk_{_B} T}}
+{\cal P} \propto e^{-\frac{\Delta E}{k_{_B} T}}
 \label{eq:Boltz}
 \end{equation}
 where $T$ is the absolute temperature of the semiconductor in Kelvin
-and $k_{_B}$ is Boltzmann's constant.  The {\em ideality factor} $n$
-is a dimensionless number that varies from 1 to 2, and sometimes higher,
-depending on the fabrication process and semiconductor material.  The
-LED's used in this experiment typically have ideality factors in the
-range 1.5-2.0 for current levels of interest in this measurement.
+and $k_{_B}$ is Boltzmann's constant.
 
 In the situation illustrated in Fig.~\ref{junctionfig},
 $\Delta E = e(V_j-V_{ext})$ where $e$ is the absolute value of the charge
@@ -343,7 +339,23 @@ leads to the following prediction for how the current $I$ depends on $V_{ext}$.
 I \propto e^{\frac{eV_{ext}-eV_j}{nk_{_B} T}}
 \label{eq:VI1}
 \end{equation}
-A semiconductor device whose current-voltage relationship are described
+The {\em ideality factor} $n$ is a dimensionless number in the range 1-2,
+and sometimes higher. It reflects the fact that recombination of holes and
+electrons can be more complicated than a simple two-body quantum
+transition. In so-called {\em direct-gap} materials, recombination can
+be thought of as a one-step transition, so the rate simply depends on
+the product of the local densities of the two charge carriers. This
+corresponds to the $n=1$ ideal limit. In {\em indirect-gap} materials
+like silicon and most other semiconductors, recombination behaves more
+like a three-body process involving the two charge carriers and a phonon
+associated with the vibrations of the crystal lattice. Such
+a process has a more complicated temperature dependence than the simple
+product of the two charge carrier densities. One way to take these complications
+into account is to introduce into Eq.~\ref{eq:VI1} a value of $n>1$.
+The LED's used in this experiment typically have ideality factors in the
+range 1.5-2.1, and somewhat above 2.1 in the case of the blue LED.
+
+A semiconductor device whose current-voltage relationship is described
 by Eq.~\ref{eq:VI1} is known as a {\em diode}.  Note that setting $V_{ext}$
 to a negative value (reverse bias) only drives the device further into
 cutoff, while a positive value $V_{ext}$ above a certain minimum value
